@@ -6,7 +6,7 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/27 14:22:16 by ldalmass          #+#    #+#             */
-/*   Updated: 2026/08/27 16:19:09 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/08/27 16:24:44 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ bool	opts_parser(int argc unused, char **argv unused, t_nm *nm)
 			default:
 				LOG(BG_CYAN BLACK "%s" RESET, optarg);
 				nm->files_count++;
-				nm->files_list[nm->files_count - 1] = optarg;
+				// nm->files_list[nm->files_count - 1] = optarg; //crashes
 				break;
 		}
 	}
@@ -87,6 +87,6 @@ void	help(t_nm *nm)
 			printf(GREEN "Usage: %s [option(s)] [file(s)]\nList symbols in [file(s)] (a.out by default).\n" RESET, nm->program_name);
 			break;
 	}
-	
+
 	return ;
 }
