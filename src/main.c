@@ -6,7 +6,7 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/27 14:08:57 by ldalmass          #+#    #+#             */
-/*   Updated: 2026/08/27 16:19:47 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/08/27 19:00:05 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,22 @@ static void nm_aout(t_nm *nm unused)
 	return ;
 }
 
-// static void	free_nm(t_nm *nm unused)
-// {
-// 	AUTO_LOG;
+void	free_nm(t_nm *nm)
+{
+	AUTO_LOG;
 
-// 	return ;
-// }
+	free_file_name(nm);
+
+	return ;
+}
 
 void	init_nm(t_nm *nm, char **argv)
 {
 	AUTO_LOG;
 
+	// Structs
+	init_file_name(nm);
+	
 	// Others
 	nm->program_name = argv[0];
 	nm->files_count = 0;
@@ -59,7 +64,7 @@ void	print_nm(t_nm *nm)
 	return ;
 }
 
-int	main(int argc, char **argv unused)
+int	main(int argc, char **argv)
 {
 	AUTO_LOG;
 	t_nm	namuru;
@@ -68,6 +73,6 @@ int	main(int argc, char **argv unused)
 	init_nm(nm, argv);
 	if (opts_parser(argc, argv, nm) == EXIT_FAILURE) return (EXIT_FAILURE);
 	if (argc < 2) nm_aout(nm);
-	// free_nm(nm);
+	free_nm(nm);
 	return (EXIT_SUCCESS);
 }

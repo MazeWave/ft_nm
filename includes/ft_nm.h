@@ -38,8 +38,22 @@
 
 // extern volatile bool g_is_running;
 
+// typedef struct s_elf_hdr
+// {
+
+// } t_elf_hdr;
+
+typedef struct s_file_name
+{
+	char				*name;
+	struct s_file_name	*next;
+} t_file_name;
+
 typedef struct s_nm
 {
+	// Structs
+	struct s_file_name	*files;
+
 	// Flags
 	bool		is_bonus;
 	bool		display_debugger_symbols;
@@ -57,7 +71,7 @@ typedef struct s_nm
 } t_nm;
 
 // main.c
-// static void	free_nm(t_nm *nm unused);
+void	free_nm(t_nm *nm);
 void	init_nm(t_nm *nm, char **argv);
 void	print_nm(t_nm *nm);
 
@@ -65,3 +79,9 @@ void	print_nm(t_nm *nm);
 bool	opts_parser(int argc, char **argv, t_nm *nm);
 void	version(t_nm *nm);
 void	help(t_nm *nm);
+
+// parse_files.c
+void	init_file_name(t_nm *nm);
+void	add_file_name(char *name, t_nm *nm);
+void	list_file_name(t_nm *nm);
+void	free_file_name(t_nm *nm);

@@ -16,6 +16,7 @@ NAME_B	=	ft_nm_bonus
 SRC		=	src/main.c \
 			src/log.c \
 			src/parser_opt.c \
+			src/parse_files.c \
 
 OBJS	=	$(SRC:.c=.o)
 
