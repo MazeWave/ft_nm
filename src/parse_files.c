@@ -46,21 +46,35 @@ void	add_file_name(char *name, t_nm *nm)
 	while (temp->next != NULL)
 		temp = temp->next;
 
-	// Calloc and set the name
-	if (temp->name == NULL)
-		temp->name = calloc(strlen(name), sizeof(char));
-	else
-	{
-		LOG(ERROR "Data already exist in temp->name !" RESET);
-		return ;
-	}
+	// Fill the name on the latest node if its empty
 	if (temp->name == NULL)
 	{
-		LOG(ERROR "Failed to calloc temp->name !" RESET);
+		temp->name = calloc(strlen(name) + 1, sizeof(char));
+		if (temp->name == NULL)	return ;
+		strcpy(temp->name, name);
 		return ;
 	}
-	temp->name = name;
-	temp->next = NULL;
+	
+	// Create the new node
+	t_file_name	*new = calloc(1, sizeof(t_file_name));
+	if (new == NULL)
+	{
+		LOG(ERROR "Failed to calloc new node !" RESET);
+		return ;
+	}
+
+	// Calloc and set the name on our new node
+	new->name = calloc(strlen(name) + 1, sizeof(char));
+	if (new->name == NULL)
+	{
+		LOG(ERROR "Failed to calloc new->name !" RESET);
+		free(new);
+		return ;
+	}
+	strcpy(new->name, name);
+
+	// Attach the new node to our linked list
+	temp->next = new;
 	return ;
 }
 
@@ -69,16 +83,17 @@ void	list_file_name(t_nm *nm)
 	AUTO_LOG;
 
 	t_file_name	*temp = nm->files;
-	if (nm->files == NULL)
+	if (nm->files == NULL || nm->files->name == NULL)
 	{
 		LOG(ERROR "Cannot read a name if nm->files is not initialized !" RESET);
 		return ;
 	}
 
 	// Read each nodes
-	while (temp->next)
+	while (temp)
 	{
-		LOG(DEBUG "%s" RESET, temp->name);
+		if (temp->name != NULL) LOG(DEBUG "%s" RESET, temp->name);
+		else LOG(DEBUG "Empty." RESET);
 		temp = temp->next;
 	}
 	return ;
@@ -103,5 +118,8 @@ void	free_file_name(t_nm *nm)
 		free(temp);
 		temp = next;
 	}
+
+	// No dangling pointers
+	nm->files = NULL;
 	return ;
 }

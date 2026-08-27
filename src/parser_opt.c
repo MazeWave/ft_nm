@@ -6,7 +6,7 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/27 14:22:16 by ldalmass          #+#    #+#             */
-/*   Updated: 2026/08/27 18:59:16 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/08/27 19:23:46 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ bool	opts_parser(int argc unused, char **argv unused, t_nm *nm)
 	}
 
 	print_nm(nm);
+	list_file_name(nm);
 	return false;
 }
 
