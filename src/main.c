@@ -6,25 +6,22 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/27 14:08:57 by ldalmass          #+#    #+#             */
-/*   Updated: 2026/08/27 19:00:05 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/08/28 15:51:54 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_nm.h"
-
-static void nm_aout(t_nm *nm unused)
-{
-	AUTO_LOG;
-
-	LOG(BG_BLUE "test" RESET);
-	return ;
-}
 
 void	free_nm(t_nm *nm)
 {
 	AUTO_LOG;
 
 	free_file_name(nm);
+	if (nm->file != NULL) 
+	{
+		munmap(nm->file, nm->st.st_size);
+		nm->file = NULL;
+	}
 
 	return ;
 }
@@ -40,9 +37,11 @@ void	init_nm(t_nm *nm, char **argv)
 	nm->program_name = argv[0];
 	nm->files_count = 0;
 	nm->files_list = NULL;
+	nm->file = NULL;
 
 	// Flags
 	nm->is_bonus = (strstr(argv[0], "_bonus") == NULL) ? false : true;
+	nm->is_64bits = false;
 	nm->display_debugger_symbols = false;
 	nm->display_external_symbols = false;
 	nm->display_undefined_symbols = false;
@@ -54,8 +53,9 @@ void	init_nm(t_nm *nm, char **argv)
 void	print_nm(t_nm *nm)
 {
 	AUTO_LOG;
-	LOG(BG_GREEN " program_name " RESET "%s", nm->program_name);
+	LOG(BG_GREEN BLACK " program_name " RESET "%s", nm->program_name);
 	LOG(BG_MAGENTA " is_bonus " RESET " %d", nm->is_bonus);
+	LOG(BG_MAGENTA " is_64bits " RESET " %d", nm->is_64bits);
 	LOG(BG_BLUE " display_debugger_symbols " RESET " %d", nm->display_debugger_symbols);
 	LOG(BG_BLUE " display_external_symbols " RESET " %d", nm->display_external_symbols);
 	LOG(BG_BLUE " display_undefined_symbols " RESET " %d", nm->display_undefined_symbols);
@@ -72,7 +72,7 @@ int	main(int argc, char **argv)
 
 	init_nm(nm, argv);
 	if (opts_parser(argc, argv, nm) == EXIT_FAILURE) return (EXIT_FAILURE);
-	if (argc < 2) nm_aout(nm);
+	parse_elf_hdr(nm->filenames->name ,nm);
 	free_nm(nm);
 	return (EXIT_SUCCESS);
 }

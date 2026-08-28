@@ -6,7 +6,7 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 12:18:44 by hugolefevre       #+#    #+#             */
-/*   Updated: 2026/08/27 19:24:50 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/08/28 14:06:37 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,12 @@
 #define BG_WHITE "\033[47m"
 
 #define INFO BG_BLUE " INFO " RESET " "
-#define DEBUG BG_YELLOW BLACK " DEBUG " RESET " "
+#define DEBUG BG_YELLOW BLACK	 " DEBUG " RESET " "
 #define ERROR BG_RED " ERROR " RESET " "
-#define PASSES BG_GREEN " PASSES " RESET " "
+
+#define PASSES BG_GREEN BLACK " PASSES " RESET " "
+#define PASS BG_GREEN BLACK " PASS " RESET " "
 #define FAILED BG_RED " FAILED " RESET " "
+#define FAIL BG_RED " FAIL " RESET " "
 
 #endif

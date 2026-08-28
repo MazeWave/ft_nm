@@ -17,6 +17,8 @@ SRC		=	src/main.c \
 			src/log.c \
 			src/parser_opt.c \
 			src/parse_files.c \
+			src/parse_elf_hdr.c \
+			src/files.c \
 
 OBJS	=	$(SRC:.c=.o)
 

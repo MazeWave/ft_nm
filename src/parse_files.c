@@ -16,16 +16,16 @@ void	init_file_name(t_nm *nm)
 {
 	AUTO_LOG;
 
-	if (nm->files == NULL)
+	if (nm->filenames == NULL)
 	{
-		nm->files = calloc(1, sizeof(t_file_name));
-		if (nm->files == NULL)
+		nm->filenames = calloc(1, sizeof(t_file_name));
+		if (nm->filenames == NULL)
 		{
 			LOG(ERROR "Failed to calloc nm->files !" RESET);
 			return ;
 		}
-		nm->files->name = NULL;
-		nm->files->next = NULL;
+		nm->filenames->name = NULL;
+		nm->filenames->next = NULL;
 	}
 	return ;
 }
@@ -34,9 +34,9 @@ void	add_file_name(char *name, t_nm *nm)
 {
 	AUTO_LOG;
 
-	t_file_name	*temp = nm->files;
+	t_file_name	*temp = nm->filenames;
 
-	if (nm->files == NULL)
+	if (nm->filenames == NULL)
 	{
 		LOG(ERROR "Cannot add a name if nm->files is not initialized !" RESET);
 		return ;
@@ -82,8 +82,8 @@ void	list_file_name(t_nm *nm)
 {
 	AUTO_LOG;
 
-	t_file_name	*temp = nm->files;
-	if (nm->files == NULL || nm->files->name == NULL)
+	t_file_name	*temp = nm->filenames;
+	if (nm->filenames == NULL || nm->filenames->name == NULL)
 	{
 		LOG(ERROR "Cannot read a name if nm->files is not initialized !" RESET);
 		return ;
@@ -96,6 +96,7 @@ void	list_file_name(t_nm *nm)
 		else LOG(DEBUG "Empty." RESET);
 		temp = temp->next;
 	}
+	LOG(DEBUG YELLOW "Size : %d" RESET, nm->files_count);
 	return ;
 }
 
@@ -103,8 +104,8 @@ void	free_file_name(t_nm *nm)
 {
 	AUTO_LOG;
 
-	t_file_name	*temp = nm->files;
-	if (nm->files == NULL)
+	t_file_name	*temp = nm->filenames;
+	if (nm->filenames == NULL)
 	{
 		LOG(INFO "nm->files was already freed or NULL !" RESET);
 		return ;
@@ -120,6 +121,6 @@ void	free_file_name(t_nm *nm)
 	}
 
 	// No dangling pointers
-	nm->files = NULL;
+	nm->filenames = NULL;
 	return ;
 }

@@ -22,6 +22,10 @@
 #include <stdint.h>
 
 #include <getopt.h>
+#include <fcntl.h>
+#include <sys/stat.h>
+#include <sys/mman.h>
+#include <elf.h>
 
 #include "log.h"
 #include "colors.h"
@@ -38,11 +42,6 @@
 
 // extern volatile bool g_is_running;
 
-// typedef struct s_elf_hdr
-// {
-
-// } t_elf_hdr;
-
 typedef struct s_file_name
 {
 	char				*name;
@@ -52,15 +51,20 @@ typedef struct s_file_name
 typedef struct s_nm
 {
 	// Structs
-	struct s_file_name	*files;
+	struct s_file_name	*filenames;
+
+	// Opened file in memory (whole file)
+	struct stat	st;
+	void		*file;
 
 	// Flags
-	bool		is_bonus;
-	bool		display_debugger_symbols;
-	bool		display_external_symbols;
-	bool		display_undefined_symbols;
-	bool		revert_sorting;
-	bool		no_sorting;
+	bool	is_bonus;
+	bool	is_64bits;
+	bool	display_debugger_symbols;
+	bool	display_external_symbols;
+	bool	display_undefined_symbols;
+	bool	revert_sorting;
+	bool	no_sorting;
 
 	// Files
 	char		**files_list;
@@ -85,3 +89,11 @@ void	init_file_name(t_nm *nm);
 void	add_file_name(char *name, t_nm *nm);
 void	list_file_name(t_nm *nm);
 void	free_file_name(t_nm *nm);
+
+// parse_elf_hdr.c
+bool	parse_elf_hdr(const char *path, t_nm *nm unused);
+bool	parse_magic_number(t_nm *nm);
+
+// files.c
+bool	open_file(const char *path, t_nm *nm);
+void	print_mmap_errors(struct stat st, t_nm *nm);

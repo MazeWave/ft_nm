@@ -6,7 +6,7 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/27 14:22:16 by ldalmass          #+#    #+#             */
-/*   Updated: 2026/08/27 19:23:46 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/08/28 13:44:46 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ bool	opts_parser(int argc unused, char **argv unused, t_nm *nm)
 			case 'h':
 				return (help(nm), false);
 			default:
-				LOG(BG_CYAN BLACK "%s" RESET, optarg);
 				nm->files_count++;
 				add_file_name(optarg, nm);
 				break;
@@ -60,7 +59,11 @@ bool	opts_parser(int argc unused, char **argv unused, t_nm *nm)
 	}
 
 	print_nm(nm);
+
+	// No file specified, defaulting to read a.out
+	if (nm->files_count == 0) add_file_name("a.out", nm);
 	list_file_name(nm);
+
 	return false;
 }
 
