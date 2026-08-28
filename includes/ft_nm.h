@@ -35,12 +35,11 @@
 #define true 1
 #define false 0
 #define bool int
+#define BOOL_STR(b) ((b) ? "true" : "false")
 
 #ifndef GIT_COMMIT
 # define GIT_COMMIT "unknown"
 #endif
-
-// extern volatile bool g_is_running;
 
 typedef struct s_file_name
 {
@@ -93,6 +92,7 @@ void	free_file_name(t_nm *nm);
 // parse_elf_hdr.c
 bool	parse_elf_hdr(const char *path, t_nm *nm unused);
 bool	parse_magic_number(t_nm *nm);
+bool	parse_architecture(t_nm *nm unused);
 
 // files.c
 bool	open_file(const char *path, t_nm *nm);

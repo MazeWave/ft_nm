@@ -6,7 +6,7 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/27 14:08:57 by ldalmass          #+#    #+#             */
-/*   Updated: 2026/08/28 15:51:54 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/08/28 16:49:50 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,13 @@ void	print_nm(t_nm *nm)
 {
 	AUTO_LOG;
 	LOG(BG_GREEN BLACK " program_name " RESET "%s", nm->program_name);
-	LOG(BG_MAGENTA " is_bonus " RESET " %d", nm->is_bonus);
-	LOG(BG_MAGENTA " is_64bits " RESET " %d", nm->is_64bits);
-	LOG(BG_BLUE " display_debugger_symbols " RESET " %d", nm->display_debugger_symbols);
-	LOG(BG_BLUE " display_external_symbols " RESET " %d", nm->display_external_symbols);
-	LOG(BG_BLUE " display_undefined_symbols " RESET " %d", nm->display_undefined_symbols);
-	LOG(BG_YELLOW BLACK " revert_sorting " RESET " %d", nm->revert_sorting);
-	LOG(BG_YELLOW BLACK " no_sorting " RESET " %d", nm->no_sorting);
+	LOG(BG_MAGENTA " is_bonus " RESET " %s", BOOL_STR(nm->is_bonus));
+	LOG(BG_MAGENTA " is_64bits " RESET " %s", BOOL_STR(nm->is_64bits));
+	LOG(BG_BLUE " display_debugger_symbols " RESET " %s", BOOL_STR(nm->display_debugger_symbols));
+	LOG(BG_BLUE " display_external_symbols " RESET " %s", BOOL_STR(nm->display_external_symbols));
+	LOG(BG_BLUE " display_undefined_symbols " RESET " %s", BOOL_STR(nm->display_undefined_symbols));
+	LOG(BG_YELLOW BLACK " revert_sorting " RESET " %s", BOOL_STR(nm->revert_sorting));
+	LOG(BG_YELLOW BLACK " no_sorting " RESET " %s", BOOL_STR(nm->no_sorting));
 	return ;
 }
 
