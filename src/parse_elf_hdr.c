@@ -6,7 +6,7 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/28 13:13:59 by ldalmass          #+#    #+#             */
-/*   Updated: 2026/08/28 17:00:52 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/08/28 17:01:43 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ bool	parse_magic_number(t_nm *nm)
 
 	if (nm->st.st_size >= SELFMAG && memcmp(nm->file, ELFMAG, SELFMAG) == 0) return (LOG(PASS), false);
 	else return (LOG(FAIL), true);
-	return false;
 }
 
 bool	parse_elf_hdr(const char *path, t_nm *nm)
