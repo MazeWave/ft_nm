@@ -45,7 +45,32 @@ typedef struct s_file_name
 {
 	char				*name;
 	struct s_file_name	*next;
-} t_file_name;
+}	t_file_name;
+
+typedef union s_shoff
+{
+	uint64_t	shoff64;
+	uint32_t	shoff32;
+}	t_shoff;
+
+typedef struct s_ehdr
+{
+	uint16_t		type;
+	uint16_t		machine;
+	union s_shoff	shoff;
+	uint16_t		shentsize;
+	uint16_t		shnum;
+	uint16_t		shstrndx;
+}	t_ehdr;
+
+typedef struct s_sym
+{
+	char		*name;
+	uint64_t	value;
+	uint8_t		info;
+	uint8_t		other;
+	uint16_t	shndx;
+}	t_sym;
 
 typedef struct s_nm
 {
@@ -53,8 +78,10 @@ typedef struct s_nm
 	struct s_file_name	*filenames;
 
 	// Opened file in memory (whole file)
-	struct stat	st;
-	void		*file;
+	void			*file;
+	struct stat		st;
+	struct s_ehdr	elf_hdr;
+	struct s_sym	*elf_symbols;
 
 	// Flags
 	bool	is_bonus;
@@ -71,7 +98,7 @@ typedef struct s_nm
 
 	// Others
 	char		*program_name;
-} t_nm;
+}	t_nm;
 
 // main.c
 void	free_nm(t_nm *nm);
@@ -89,11 +116,15 @@ void	add_file_name(char *name, t_nm *nm);
 void	list_file_name(t_nm *nm);
 void	free_file_name(t_nm *nm);
 
+// files.c
+bool	open_file(const char *path, t_nm *nm);
+void	print_mmap_errors(struct stat st, t_nm *nm);
+
 // parse_elf_hdr.c
 bool	parse_elf_hdr(const char *path, t_nm *nm unused);
 bool	parse_magic_number(t_nm *nm);
 bool	parse_bits(t_nm *nm);
+bool	parse_architecture(t_nm *nm);
 
-// files.c
-bool	open_file(const char *path, t_nm *nm);
-void	print_mmap_errors(struct stat st, t_nm *nm);
+// parse_elf_sections.c
+bool	parse_section_header(t_nm *nm);
