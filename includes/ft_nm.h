@@ -92,7 +92,7 @@ void	free_file_name(t_nm *nm);
 // parse_elf_hdr.c
 bool	parse_elf_hdr(const char *path, t_nm *nm unused);
 bool	parse_magic_number(t_nm *nm);
-bool	parse_architecture(t_nm *nm unused);
+bool	parse_bits(t_nm *nm);
 
 // files.c
 bool	open_file(const char *path, t_nm *nm);

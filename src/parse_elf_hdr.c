@@ -6,13 +6,13 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/28 13:13:59 by ldalmass          #+#    #+#             */
-/*   Updated: 2026/08/28 16:52:28 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/08/28 17:00:52 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_nm.h"
 
-bool	parse_architecture(t_nm *nm unused)
+bool	parse_bits(t_nm *nm)
 {
 	AUTO_LOG;
 	uint8_t	*file = nm->file;
@@ -42,7 +42,7 @@ bool	parse_elf_hdr(const char *path, t_nm *nm)
 	bool	failed = false;
 	failed += open_file(path, nm);
 	failed += parse_magic_number(nm);
-	failed += parse_architecture(nm);
+	failed += parse_bits(nm);
 
 	print_nm(nm);
 	return (failed);
