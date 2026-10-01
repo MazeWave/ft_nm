@@ -18,6 +18,7 @@ SRC		=	src/main.c \
 			src/parser_opt.c \
 			src/parse_files.c \
 			src/parse_elf_hdr.c \
+			src/parse_elf_sections.c \
 			src/files.c \
 
 OBJS	=	$(SRC:.c=.o)

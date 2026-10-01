@@ -6,7 +6,7 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/27 14:08:57 by ldalmass          #+#    #+#             */
-/*   Updated: 2026/08/28 16:49:50 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/10/01 17:11:48 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	free_nm(t_nm *nm)
 	AUTO_LOG;
 
 	free_file_name(nm);
-	if (nm->file != NULL) 
+	if (nm->file != NULL)
 	{
 		munmap(nm->file, nm->st.st_size);
 		nm->file = NULL;
@@ -32,7 +32,7 @@ void	init_nm(t_nm *nm, char **argv)
 
 	// Structs
 	init_file_name(nm);
-	
+
 	// Others
 	nm->program_name = argv[0];
 	nm->files_count = 0;
@@ -72,7 +72,17 @@ int	main(int argc, char **argv)
 
 	init_nm(nm, argv);
 	if (opts_parser(argc, argv, nm) == EXIT_FAILURE) return (EXIT_FAILURE);
-	parse_elf_hdr(nm->filenames->name ,nm);
+
+	// loop over each files
+	t_file_name	*temp = nm->filenames;
+	while (temp)
+	{
+		parse_elf_hdr(temp->name, nm);
+		parse_section_header(nm);
+		temp = temp->next;
+	}
+
+	// free and exit
 	free_nm(nm);
 	return (EXIT_SUCCESS);
 }

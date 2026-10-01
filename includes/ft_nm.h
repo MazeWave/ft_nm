@@ -63,14 +63,62 @@ typedef struct s_ehdr
 	uint16_t		shstrndx;
 }	t_ehdr;
 
-typedef struct s_sym
+// typedef struct s_sym
+// {
+// 	char		*name;
+// 	uint64_t	value;
+// 	uint8_t		info;
+// 	uint8_t		other;
+// 	uint16_t	shndx;
+// }	t_sym;
+
+typedef struct s_elf32_shdr
 {
-	char		*name;
-	uint64_t	value;
-	uint8_t		info;
-	uint8_t		other;
-	uint16_t	shndx;
-}	t_sym;
+	uint32_t	sh_name;
+	uint32_t	sh_type;
+	uint32_t	sh_flags;
+	Elf32_Addr	sh_addr;
+	Elf32_Off	sh_offset;
+	uint32_t	sh_size;
+	uint32_t	sh_link;
+	uint32_t	sh_info;
+	uint32_t	sh_addralign;
+	uint32_t	sh_entsize;
+} t_elf32_shdr;
+
+typedef struct s_elf64_shdr
+{
+	uint32_t	sh_name;
+	uint32_t	sh_type;
+	uint64_t	sh_flags;
+	Elf64_Addr	sh_addr;
+	Elf64_Off	sh_offset;
+	uint64_t	sh_size;
+	uint32_t	sh_link;
+	uint32_t	sh_info;
+	uint64_t	sh_addralign;
+	uint64_t	sh_entsize;
+} t_elf64_shdr;
+
+typedef struct s_elf32_sym
+{
+	uint32_t		st_name;
+	Elf32_Addr		st_value;
+	uint32_t		st_size;
+	unsigned char	st_info;
+	unsigned char	st_other;
+	uint16_t		st_shndx;
+} t_elf32_sym;
+
+typedef struct s_elf64_sym
+{
+	uint32_t	 	st_name;
+	unsigned char	st_info;
+	unsigned char	st_other;
+	uint16_t		st_shndx;
+	Elf64_Addr		st_value;
+	uint64_t		st_size;
+} t_elf64_sym;
 
 typedef struct s_nm
 {
