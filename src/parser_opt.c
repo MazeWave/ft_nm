@@ -6,7 +6,7 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/27 14:22:16 by ldalmass          #+#    #+#             */
-/*   Updated: 2026/08/28 13:44:46 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/10/01 16:17:30 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	help(t_nm *nm)
 			printf(MAGENTA "  -u        : Display only undefined symbols\n" RESET);
 			printf(MAGENTA "  -r        : Reverse the sense of the sort\n" RESET);
 			printf(MAGENTA "  -p        : Do not sort the symbols\n" RESET);
-			printf(MAGENTA "  -h -?     : Show this help screen" RESET);
+			printf(MAGENTA "  -h -?     : Show this help screen\n" RESET);
 			break;
 		default:
 			printf(GREEN "Usage: %s [option(s)] [file(s)]\nList symbols in [file(s)] (a.out by default).\n" RESET, nm->program_name);
