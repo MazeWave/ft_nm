@@ -127,7 +127,7 @@ void	free_file_name(t_nm *nm)
 
 bool	is_inbound(t_nm *nm, uint64_t offset, uint64_t size)
 {
-	if (offset > sizeof(nm->file))			return (false);
-	if (size > (sizeof(nm->file) - offset))	return (false);
+	if (offset > (uint64_t)(nm->st.st_size))			return (false);
+	if (size > ((uint64_t)(nm->st.st_size)- offset))	return (false);
 	return (true);
 }
