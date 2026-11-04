@@ -6,7 +6,7 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/28 13:13:59 by ldalmass          #+#    #+#             */
-/*   Updated: 2026/10/01 11:51:55 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/11/04 15:56:05 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,10 @@ bool	parse_elf_hdr(const char *path, t_nm *nm)
 {
 	AUTO_LOG;
 
-	bool	failed = false;
-	failed += open_file(path, nm);
-	failed += parse_magic_number(nm);
-	failed += parse_bits(nm);
+	if (open_file(path, nm) != 0)		return (true);
+	if (parse_magic_number(nm) != 0)	return (true);
+	if (parse_bits(nm) != 0)			return (true);
 
 	print_nm(nm);
-	return (failed);
+	return (false);
 }
