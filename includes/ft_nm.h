@@ -35,7 +35,6 @@
 #define true 1
 #define false 0
 #define bool int
-#define BOOL_STR(b) ((b) ? "true" : "false")
 
 #ifndef GIT_COMMIT
 # define GIT_COMMIT "unknown"
@@ -71,34 +70,6 @@ typedef struct s_ehdr
 // 	uint8_t		other;
 // 	uint16_t	shndx;
 // }	t_sym;
-
-typedef struct s_elf32_shdr
-{
-	uint32_t	sh_name;
-	uint32_t	sh_type;
-	uint32_t	sh_flags;
-	Elf32_Addr	sh_addr;
-	Elf32_Off	sh_offset;
-	uint32_t	sh_size;
-	uint32_t	sh_link;
-	uint32_t	sh_info;
-	uint32_t	sh_addralign;
-	uint32_t	sh_entsize;
-} t_elf32_shdr;
-
-typedef struct s_elf64_shdr
-{
-	uint32_t	sh_name;
-	uint32_t	sh_type;
-	uint64_t	sh_flags;
-	Elf64_Addr	sh_addr;
-	Elf64_Off	sh_offset;
-	uint64_t	sh_size;
-	uint32_t	sh_link;
-	uint32_t	sh_info;
-	uint64_t	sh_addralign;
-	uint64_t	sh_entsize;
-} t_elf64_shdr;
 
 typedef struct s_elf32_sym
 {
@@ -163,6 +134,7 @@ void	init_file_name(t_nm *nm);
 void	add_file_name(char *name, t_nm *nm);
 void	list_file_name(t_nm *nm);
 void	free_file_name(t_nm *nm);
+bool	is_inbound(t_nm *nm, uint64_t offset, uint64_t size);
 
 // files.c
 bool	open_file(const char *path, t_nm *nm);
