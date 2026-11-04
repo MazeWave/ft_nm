@@ -6,7 +6,7 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/28 13:17:05 by ldalmass          #+#    #+#             */
-/*   Updated: 2026/08/28 15:34:30 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/11/04 15:28:52 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ bool	open_file(const char *path, t_nm *nm)
 	struct stat	new_stats;
 	
 	// Open and map the file
-	if (fd < 0) return (LOG(ERROR "File desciptor failed to open the path !"), true);
+	if (fd < 0) return (LOG(ERROR "File descriptor failed to open the path !"), true);
 	if (fstat(fd, &new_stats) < 0) return (LOG(ERROR "Failed to get statistics (fstat) of the file descriptor !"), close(fd), true);
 	new_mapping = mmap(NULL, new_stats.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
 	close(fd);
