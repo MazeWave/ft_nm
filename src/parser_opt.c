@@ -6,13 +6,13 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/27 14:22:16 by ldalmass          #+#    #+#             */
-/*   Updated: 2026/11/04 18:10:18 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/11/04 18:13:37 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_nm.h"
 
-static void	can_use_bonus_flag(t_nm *nm, int fd unused)
+static void	can_use_bonus_flag(t_nm *nm, int fd)
 {
 	if (nm->is_bonus)	return ;
 	else
@@ -25,7 +25,7 @@ static void	can_use_bonus_flag(t_nm *nm, int fd unused)
 	return ;
 }
 
-void	opts_parser(int argc unused, char **argv unused, t_nm *nm)
+void	opts_parser(int argc, char **argv, t_nm *nm)
 {
 	AUTO_LOG;
 	int	opt = 0;
