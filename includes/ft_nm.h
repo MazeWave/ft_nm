@@ -138,6 +138,7 @@ bool	is_inbound(t_nm *nm, uint64_t offset, uint64_t size);
 
 // files.c
 bool	open_file(const char *path, t_nm *nm);
+void	close_file(t_nm *nm);
 void	print_mmap_errors(struct stat st, t_nm *nm);
 
 // parse_elf_hdr.c

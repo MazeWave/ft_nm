@@ -6,7 +6,7 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/28 13:17:05 by ldalmass          #+#    #+#             */
-/*   Updated: 2026/11/04 15:28:52 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/11/04 16:26:55 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,18 +42,28 @@ bool	open_file(const char *path, t_nm *nm)
 	return false;
 }
 
+void	close_file(t_nm *nm)
+{
+	AUTO_LOG;
+
+	munmap(nm->file, nm->st.st_size);
+	nm->file = NULL;
+	nm->st.st_size = 0;
+	return ;
+}
+
 void	print_mmap_errors(struct stat st, t_nm *nm)
 {
 	printf(RED "%s: mmap: ", nm->program_name);
 	switch (st.st_mode & S_IFMT)
 	{
-    	default:		printf("unknown file type\n");	break;
-		case S_IFBLK:	printf("block device\n");		break;
-		case S_IFCHR:	printf("character device\n");	break;
-		case S_IFDIR:	printf("is directory\n");		break;
-		case S_IFIFO:	printf("is FIFO/pipe\n");		break;
-		case S_IFLNK:	printf("is symlink\n");			break;
-		case S_IFSOCK:	printf("is socket\n");			break;
+    	default:		printf("unknown file type\n");						break;
+		case S_IFBLK:	printf("block device\n");							break;
+		case S_IFCHR:	printf("character device\n");						break;
+		case S_IFDIR:	printf("is directory\n");							break;
+		case S_IFIFO:	printf("is FIFO/pipe\n");							break;
+		case S_IFLNK:	printf("is symlink\n");								break;
+		case S_IFSOCK:	printf("is socket\n");								break;
 		case S_IFREG:	printf("%s, regular file\n", strerror(errno));		break;
     }
     printf(RESET);
