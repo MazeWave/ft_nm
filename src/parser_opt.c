@@ -6,7 +6,7 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/27 14:22:16 by ldalmass          #+#    #+#             */
-/*   Updated: 2026/11/04 16:50:46 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/11/04 16:53:44 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static void	can_use_bonus_flag(t_nm *nm)
 	else
 	{
 		help(nm);
+		free_nm(nm);
 		exit(EXIT_FAILURE);
 	}
 
@@ -59,12 +60,15 @@ void	opts_parser(int argc unused, char **argv unused, t_nm *nm)
 			// MANDATORY
 			case 'v':
 				version(nm);
+				free_nm(nm);
 				exit (EXIT_SUCCESS);
 			case '?':
 				help(nm);
+				free_nm(nm);
 				exit (EXIT_SUCCESS);
 			case 'h':
 				help(nm);
+				free_nm(nm);
 				exit (EXIT_SUCCESS);
 			default:
 				nm->files_count++;
