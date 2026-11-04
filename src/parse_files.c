@@ -124,3 +124,10 @@ void	free_file_name(t_nm *nm)
 	nm->filenames = NULL;
 	return ;
 }
+
+bool	is_inbound(t_nm *nm, uint64_t offset, uint64_t size)
+{
+	if (offset > sizeof(nm->file))			return (false);
+	if (size > (sizeof(nm->file) - offset))	return (false);
+	return (true);
+}
