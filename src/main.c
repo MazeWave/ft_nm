@@ -75,20 +75,18 @@ int	main(int argc, char **argv)
 
 	// loop over each files
 	t_file_name	*temp = nm->filenames;
-	while (temp)
+	while (temp && temp->name)
 	{
-		LOG("Running on " BG_WHITE BLACK " %s " RESET, nm->filenames->name);
+		LOG("Running on " BG_WHITE BLACK " %s " RESET, temp->name);
 		if (parse_elf_hdr(temp->name, nm) != 0)
 		{
-			nm->file = NULL;
-			nm->st.st_size = 0;
+			close_file(nm);
 			temp = temp->next;
 			continue;
 		}
 		parse_section_header(nm);
 		// parse_symbols(nm);
 		temp = temp->next;
-		nm->file = NULL;
 	}
 
 	// free and exit
