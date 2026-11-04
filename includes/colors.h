@@ -6,7 +6,7 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 12:18:44 by hugolefevre       #+#    #+#             */
-/*   Updated: 2026/08/28 14:06:37 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/11/04 15:24:27 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,7 @@
 #define PASS BG_GREEN BLACK " PASS " RESET " "
 #define FAILED BG_RED " FAILED " RESET " "
 #define FAIL BG_RED " FAIL " RESET " "
+
+#define BOOL_STR(b) ((b) ? "true" : "false")
 
 #endif
