@@ -127,7 +127,7 @@ void	print_nm(t_nm *nm);
 // parset_opt.c
 void	opts_parser(int argc, char **argv, t_nm *nm);
 void	version(t_nm *nm);
-void	help(t_nm *nm);
+void	help(t_nm *nm, int fd);
 
 // parse_files.c
 void	init_file_name(t_nm *nm);

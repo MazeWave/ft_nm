@@ -6,18 +6,18 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/27 14:22:16 by ldalmass          #+#    #+#             */
-/*   Updated: 2026/11/04 16:53:44 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/11/04 18:10:18 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_nm.h"
 
-static void	can_use_bonus_flag(t_nm *nm)
+static void	can_use_bonus_flag(t_nm *nm, int fd unused)
 {
 	if (nm->is_bonus)	return ;
 	else
 	{
-		help(nm);
+		help(nm, fd);
 		free_nm(nm);
 		exit(EXIT_FAILURE);
 	}
@@ -37,23 +37,23 @@ void	opts_parser(int argc unused, char **argv unused, t_nm *nm)
 		{
 			// BONUSES
 			case 'a':
-				can_use_bonus_flag(nm);
+				can_use_bonus_flag(nm, optopt);
 				nm->display_debugger_symbols = true;
 				break;
 			case 'g':
-				can_use_bonus_flag(nm);
+				can_use_bonus_flag(nm, optopt);
 				nm->display_external_symbols = true;
 				break;
 			case 'u':
-				can_use_bonus_flag(nm);
+				can_use_bonus_flag(nm, optopt);
 				nm->display_undefined_symbols = true;
 				break;
 			case 'r':
-				can_use_bonus_flag(nm);
+				can_use_bonus_flag(nm, optopt);
 				nm->revert_sorting = true;
 				break;
 			case 'p':
-				can_use_bonus_flag(nm);
+				can_use_bonus_flag(nm, optopt);
 				nm->no_sorting = true;
 				break;
 
@@ -63,11 +63,11 @@ void	opts_parser(int argc unused, char **argv unused, t_nm *nm)
 				free_nm(nm);
 				exit (EXIT_SUCCESS);
 			case '?':
-				help(nm);
+				help(nm, optopt);
 				free_nm(nm);
-				exit (EXIT_SUCCESS);
+				exit(optopt == 0 ? EXIT_SUCCESS : EXIT_FAILURE);
 			case 'h':
-				help(nm);
+				help(nm, optopt);
 				free_nm(nm);
 				exit (EXIT_SUCCESS);
 			default:
@@ -88,26 +88,27 @@ void	opts_parser(int argc unused, char **argv unused, t_nm *nm)
 
 void	version(t_nm *nm)
 {
-	printf(GREEN "%s on commit " BG_GREEN BLACK " %s " RESET ".\n" RESET, nm->program_name, GIT_COMMIT);
+	dprintf(1, GREEN "%s on commit " BG_GREEN BLACK " %s " RESET ".\n" RESET, nm->program_name, GIT_COMMIT);
 	return ;
 }
 
-void	help(t_nm *nm)
+void	help(t_nm *nm, int fd)
 {
+	++fd;
 	switch (nm->is_bonus)
 	{
 		case true:
-			printf(GREEN "Usage: %s [option(s)] [file(s)]\nList symbols in [file(s)] (a.out by default).\n" RESET, nm->program_name);
-			printf(BLUE "Options:\n" RESET);
-			printf(MAGENTA "  -a        : Display debugger-only symbols\n" RESET);
-			printf(MAGENTA "  -g        : Display only external symbols\n" RESET);
-			printf(MAGENTA "  -u        : Display only undefined symbols\n" RESET);
-			printf(MAGENTA "  -r        : Reverse the sense of the sort\n" RESET);
-			printf(MAGENTA "  -p        : Do not sort the symbols\n" RESET);
-			printf(MAGENTA "  -h -?     : Show this help screen\n" RESET);
+			dprintf(fd, GREEN "Usage: %s [option(s)] [file(s)]\nList symbols in [file(s)] (a.out by default).\n" RESET, nm->program_name);
+			dprintf(fd, BLUE "Options:\n" RESET);
+			dprintf(fd, MAGENTA "  -a        : Display debugger-only symbols\n" RESET);
+			dprintf(fd, MAGENTA "  -g        : Display only external symbols\n" RESET);
+			dprintf(fd, MAGENTA "  -u        : Display only undefined symbols\n" RESET);
+			dprintf(fd, MAGENTA "  -r        : Reverse the sense of the sort\n" RESET);
+			dprintf(fd, MAGENTA "  -p        : Do not sort the symbols\n" RESET);
+			dprintf(fd, MAGENTA "  -h -?     : Show this help screen\n" RESET);
 			break;
 		default:
-			printf(GREEN "Usage: %s [option(s)] [file(s)]\nList symbols in [file(s)] (a.out by default).\n" RESET, nm->program_name);
+			dprintf(fd, GREEN "Usage: %s [option(s)] [file(s)]\nList symbols in [file(s)] (a.out by default).\n" RESET, nm->program_name);
 			break;
 	}
 
