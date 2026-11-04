@@ -6,7 +6,7 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/27 14:08:57 by ldalmass          #+#    #+#             */
-/*   Updated: 2026/10/01 17:11:48 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/1111/0404 1515:0909:4848 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	print_nm(t_nm *nm)
 int	main(int argc, char **argv)
 {
 	AUTO_LOG;
-	t_nm	namuru;
+	t_nm	namuru = {0};
 	t_nm	*nm = &namuru;
 
 	init_nm(nm, argv);
@@ -77,9 +77,18 @@ int	main(int argc, char **argv)
 	t_file_name	*temp = nm->filenames;
 	while (temp)
 	{
-		parse_elf_hdr(temp->name, nm);
+		LOG("Running on " BG_WHITE BLACK " %s " RESET, nm->filenames->name);
+		if (parse_elf_hdr(temp->name, nm) != 0)
+		{
+			nm->file = NULL;
+			nm->st.st_size = 0;
+			temp = temp->next;
+			continue;
+		}
 		parse_section_header(nm);
+		// parse_symbols(nm);
 		temp = temp->next;
+		nm->file = NULL;
 	}
 
 	// free and exit
