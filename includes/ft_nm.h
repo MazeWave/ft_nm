@@ -125,7 +125,7 @@ void	init_nm(t_nm *nm, char **argv);
 void	print_nm(t_nm *nm);
 
 // parset_opt.c
-bool	opts_parser(int argc, char **argv, t_nm *nm);
+void	opts_parser(int argc, char **argv, t_nm *nm);
 void	version(t_nm *nm);
 void	help(t_nm *nm);
 

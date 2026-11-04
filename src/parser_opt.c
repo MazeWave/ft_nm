@@ -6,13 +6,25 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/27 14:22:16 by ldalmass          #+#    #+#             */
-/*   Updated: 2026/10/01 16:17:30 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/11/04 16:50:46 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_nm.h"
 
-bool	opts_parser(int argc unused, char **argv unused, t_nm *nm)
+static void	can_use_bonus_flag(t_nm *nm)
+{
+	if (nm->is_bonus)	return ;
+	else
+	{
+		help(nm);
+		exit(EXIT_FAILURE);
+	}
+
+	return ;
+}
+
+void	opts_parser(int argc unused, char **argv unused, t_nm *nm)
 {
 	AUTO_LOG;
 	int	opt = 0;
@@ -24,33 +36,36 @@ bool	opts_parser(int argc unused, char **argv unused, t_nm *nm)
 		{
 			// BONUSES
 			case 'a':
-				if (!nm->is_bonus) return (help(nm), false);
-				else nm->display_debugger_symbols = true;
+				can_use_bonus_flag(nm);
+				nm->display_debugger_symbols = true;
 				break;
 			case 'g':
-				if (!nm->is_bonus) return (help(nm), false);
-				else nm->display_external_symbols = true;
+				can_use_bonus_flag(nm);
+				nm->display_external_symbols = true;
 				break;
 			case 'u':
-				if (!nm->is_bonus) return (help(nm), false);
-				else nm->display_undefined_symbols = true;
+				can_use_bonus_flag(nm);
+				nm->display_undefined_symbols = true;
 				break;
 			case 'r':
-				if (!nm->is_bonus) return (help(nm), false);
-				else nm->revert_sorting = true;
+				can_use_bonus_flag(nm);
+				nm->revert_sorting = true;
 				break;
 			case 'p':
-				if (!nm->is_bonus) return (help(nm), false);
-				else nm->no_sorting = true;
+				can_use_bonus_flag(nm);
+				nm->no_sorting = true;
 				break;
 
 			// MANDATORY
 			case 'v':
-				return (version(nm), false);
+				version(nm);
+				exit (EXIT_SUCCESS);
 			case '?':
-				return (help(nm), false);
+				help(nm);
+				exit (EXIT_SUCCESS);
 			case 'h':
-				return (help(nm), false);
+				help(nm);
+				exit (EXIT_SUCCESS);
 			default:
 				nm->files_count++;
 				add_file_name(optarg, nm);
@@ -64,7 +79,7 @@ bool	opts_parser(int argc unused, char **argv unused, t_nm *nm)
 	if (nm->files_count == 0) add_file_name("a.out", nm);
 	list_file_name(nm);
 
-	return false;
+	return ;
 }
 
 void	version(t_nm *nm)

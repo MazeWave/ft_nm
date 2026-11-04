@@ -71,7 +71,7 @@ int	main(int argc, char **argv)
 	t_nm	*nm = &namuru;
 
 	init_nm(nm, argv);
-	if (opts_parser(argc, argv, nm) == EXIT_FAILURE) return (EXIT_FAILURE);
+	opts_parser(argc, argv, nm);
 
 	// loop over each files
 	t_file_name	*temp = nm->filenames;
