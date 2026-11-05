@@ -6,7 +6,7 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/27 14:22:16 by ldalmass          #+#    #+#             */
-/*   Updated: 2026/11/04 18:13:37 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/11/05 13:33:14 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,23 +37,23 @@ void	opts_parser(int argc, char **argv, t_nm *nm)
 		{
 			// BONUSES
 			case 'a':
-				can_use_bonus_flag(nm, optopt);
+				can_use_bonus_flag(nm, STDOUT_FILENO);
 				nm->display_debugger_symbols = true;
 				break;
 			case 'g':
-				can_use_bonus_flag(nm, optopt);
+				can_use_bonus_flag(nm, STDOUT_FILENO);
 				nm->display_external_symbols = true;
 				break;
 			case 'u':
-				can_use_bonus_flag(nm, optopt);
+				can_use_bonus_flag(nm, STDOUT_FILENO);
 				nm->display_undefined_symbols = true;
 				break;
 			case 'r':
-				can_use_bonus_flag(nm, optopt);
+				can_use_bonus_flag(nm, STDOUT_FILENO);
 				nm->revert_sorting = true;
 				break;
 			case 'p':
-				can_use_bonus_flag(nm, optopt);
+				can_use_bonus_flag(nm, STDOUT_FILENO);
 				nm->no_sorting = true;
 				break;
 
@@ -63,11 +63,11 @@ void	opts_parser(int argc, char **argv, t_nm *nm)
 				free_nm(nm);
 				exit (EXIT_SUCCESS);
 			case '?':
-				help(nm, optopt);
+				help(nm, optopt == 0 ? STDOUT_FILENO : STDERR_FILENO);
 				free_nm(nm);
 				exit(optopt == 0 ? EXIT_SUCCESS : EXIT_FAILURE);
 			case 'h':
-				help(nm, optopt);
+				help(nm, STDOUT_FILENO);
 				free_nm(nm);
 				exit (EXIT_SUCCESS);
 			default:
@@ -94,7 +94,6 @@ void	version(t_nm *nm)
 
 void	help(t_nm *nm, int fd)
 {
-	++fd;
 	switch (nm->is_bonus)
 	{
 		case true:
