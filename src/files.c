@@ -6,7 +6,7 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/28 13:17:05 by ldalmass          #+#    #+#             */
-/*   Updated: 2026/11/05 17:00:13 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/11/05 18:27:47 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ bool	open_file(const char *path, t_nm *nm)
 	// Copy the newly mapped region to our global one
 	nm->file = new_mapping;
 	nm->st = new_stats;
-	LOG(BG_GREEN BLACK " Opened " RESET " %s", path);
+	LOG(INFO "%s" " successfully mapped", path);
 	return false;
 }
 

@@ -53,14 +53,14 @@ void	init_nm(t_nm *nm, char **argv)
 void	print_nm(t_nm *nm)
 {
 	AUTO_LOG;
-	LOG(BG_GREEN BLACK " program_name " RESET "%s", nm->program_name);
-	LOG(BG_MAGENTA " is_bonus " RESET " %s", BOOL_STR(nm->is_bonus));
-	LOG(BG_MAGENTA " is_64bits " RESET " %s", BOOL_STR(nm->is_64bits));
-	LOG(BG_BLUE " display_debugger_symbols " RESET " %s", BOOL_STR(nm->display_debugger_symbols));
-	LOG(BG_BLUE " display_external_symbols " RESET " %s", BOOL_STR(nm->display_external_symbols));
-	LOG(BG_BLUE " display_undefined_symbols " RESET " %s", BOOL_STR(nm->display_undefined_symbols));
-	LOG(BG_YELLOW BLACK " revert_sorting " RESET " %s", BOOL_STR(nm->revert_sorting));
-	LOG(BG_YELLOW BLACK " no_sorting " RESET " %s", BOOL_STR(nm->no_sorting));
+	LOG(GREEN "program_name " RESET H("%s"), nm->program_name);
+	LOG(MAGENTA "is_bonus" RESET " %s", BOOL_STR(nm->is_bonus));
+	LOG(MAGENTA "is_64bits" RESET " %s", BOOL_STR(nm->is_64bits));
+	LOG(BLUE "display_debugger_symbols" RESET " %s", BOOL_STR(nm->display_debugger_symbols));
+	LOG(BLUE "display_external_symbols" RESET " %s", BOOL_STR(nm->display_external_symbols));
+	LOG(BLUE "display_undefined_symbols" RESET " %s", BOOL_STR(nm->display_undefined_symbols));
+	LOG(YELLOW "revert_sorting" RESET " %s", BOOL_STR(nm->revert_sorting));
+	LOG(YELLOW "no_sorting" RESET " %s", BOOL_STR(nm->no_sorting));
 	return ;
 }
 
@@ -79,7 +79,7 @@ int	main(int argc, char **argv)
 	t_file_name	*temp = nm->filenames;
 	while (temp && temp->name)
 	{
-		LOG("Running on " BG_WHITE BLACK " %s " RESET, temp->name);
+		LOG("Running on " H("%s") RESET, temp->name);
 		if (parse_elf_hdr(temp->name, nm) != 0)
 		{
 			close_file(nm);
