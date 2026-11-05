@@ -6,7 +6,7 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 13:30:48 by ldalmass          #+#    #+#             */
-/*   Updated: 2026/01/09 13:53:18 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/11/05 17:50:33 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,19 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdarg.h>
+#include "./colors.h"
+#include "./tui.h"
 
-#define IN "┌─ IN  "
-#define WALL "│  "
-#define OUT "└─ OUT "
-#define TRAIL " ───────┄┄╌┈"
+#define IN BOX_ROUND_TL "─" WHITE CAP_ROUND_L BG_WHITE BLACK " IN " RESET WHITE CAP_ROUND_R " " RESET
+#define WALL BOX_V "  "
+#define OUT BOX_ROUND_BL "─" WHITE CAP_ROUND_L BG_WHITE BLACK " OUT " RESET WHITE CAP_ROUND_R " " RESET
+// #define OUT CAP_ROUND_L RESET
+#define TRAIL ""
+
+// #define IN "┌─ IN  "
+// #define WALL "│  "
+// #define OUT "└─ OUT "
+// #define TRAIL " ───────┄┄╌┈"
 
 typedef struct s_log
 {

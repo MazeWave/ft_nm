@@ -119,6 +119,8 @@ typedef struct s_nm
 	char		*program_name;
 }	t_nm;
 
+extern int	g_exit_status;
+
 // main.c
 void	free_nm(t_nm *nm);
 void	init_nm(t_nm *nm, char **argv);

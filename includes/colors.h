@@ -6,12 +6,14 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 12:18:44 by hugolefevre       #+#    #+#             */
-/*   Updated: 2026/11/04 15:24:27 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/11/05 18:00:09 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef COLORS_H
 #define COLORS_H
+
+#include "./tui.h"
 
 #define RESET "\033[0m"
 #define WHITE "\033[37m"
@@ -32,15 +34,17 @@
 #define BG_CYAN "\033[46m"
 #define BG_WHITE "\033[47m"
 
-#define INFO BG_BLUE " INFO " RESET " "
-#define DEBUG BG_YELLOW BLACK	 " DEBUG " RESET " "
-#define ERROR BG_RED " ERROR " RESET " "
+#define INFO WHITE CAP_ROUND_L BG_WHITE BLACK " INFO " RESET WHITE CAP_ROUND_R RESET
+#define DEBUG BLUE CAP_ROUND_L BG_BLUE BLACK	 " DEBUG " RESET BLUE CAP_ROUND_R RESET
+#define WARNING YELLOW CAP_ROUND_L BG_YELLOW " WARNING " RESET YELLOW CAP_ROUND_R RESET
+#define ERROR RED CAP_ROUND_L BG_RED " ERROR " RESET RED CAP_ROUND_R RESET
 
-#define PASSES BG_GREEN BLACK " PASSES " RESET " "
-#define PASS BG_GREEN BLACK " PASS " RESET " "
-#define FAILED BG_RED " FAILED " RESET " "
-#define FAIL BG_RED " FAIL " RESET " "
+#define PASSES GREEN CAP_ROUND_L BG_GREEN BLACK " PASSES " RESET GREEN CAP_ROUND_R RESET
+#define PASS GREEN CAP_ROUND_L BG_GREEN BLACK " PASS " RESET GREEN CAP_ROUND_R RESET
+#define FAILED RED CAP_ROUND_L BG_RED WHITE " FAILED " RESET RED CAP_ROUND_R RESET
+#define FAIL RED CAP_ROUND_L BG_RED WHITE " FAIL " RESET RED CAP_ROUND_R RESET
 
-#define BOOL_STR(b) ((b) ? "true" : "false")
+#define BOOL_STR(boolean) ((boolean) ? GREEN CAP_ROUND_L BG_GREEN BLACK "true" RESET GREEN CAP_ROUND_R RESET : RED CAP_ROUND_L BG_RED WHITE "false" RESET RED CAP_ROUND_R RESET)
+// #define BOOL_STR(boolean) ((boolean) ? "true" : "false")
 
 #endif
