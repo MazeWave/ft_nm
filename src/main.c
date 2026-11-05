@@ -64,6 +64,8 @@ void	print_nm(t_nm *nm)
 	return ;
 }
 
+int	g_exit_status = 0;
+
 int	main(int argc, char **argv)
 {
 	AUTO_LOG;
@@ -91,5 +93,14 @@ int	main(int argc, char **argv)
 
 	// free and exit
 	free_nm(nm);
-	return (EXIT_SUCCESS);
+	LOG(HEADER("test"));
+	LOG(H_BLACK("test"));
+	LOG(H_RED("test"));
+	LOG(H_YELLOW("test"));
+	LOG(H_GREEN("test"));
+	LOG(H_CYAN("test"));
+	LOG(H_BLUE("test"));
+	LOG(H_MAGENTA("test"));
+	LOG(H_WHITE("test"));
+	return (g_exit_status);
 }

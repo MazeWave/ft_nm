@@ -6,7 +6,7 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 12:18:44 by hugolefevre       #+#    #+#             */
-/*   Updated: 2026/11/05 18:13:38 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/11/05 18:17:14 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,14 @@
 #define BOOL_STR(boolean) ((boolean) ? GREEN CAP_ROUND_L BG_GREEN BLACK "true" RESET GREEN CAP_ROUND_R RESET : RED CAP_ROUND_L BG_RED WHITE "false" RESET RED CAP_ROUND_R RESET)
 
 #define HEADER(string) CAP_ROUND_L BG_WHITE BLACK string RESET CAP_ROUND_R
+#define H(string) CAP_ROUND_L BG_WHITE BLACK string RESET CAP_ROUND_R
 #define H_BLACK(string) BLACK CAP_ROUND_L BG_BLACK WHITE string RESET BLACK CAP_ROUND_R RESET
 #define H_RED(string) RED CAP_ROUND_L BG_RED WHITE string RESET RED CAP_ROUND_R RESET
-#define H_GREEN(string) GREEN CAP_ROUND_L BG_GREEN BLACK string RESET GREEN CAP_ROUND_R RESET
 #define H_YELLOW(string) YELLOW CAP_ROUND_L BG_YELLOW BLACK string RESET YELLOW CAP_ROUND_R RESET
+#define H_GREEN(string) GREEN CAP_ROUND_L BG_GREEN BLACK string RESET GREEN CAP_ROUND_R RESET
+#define H_CYAN(string) CYAN CAP_ROUND_L BG_CYAN WHITE string RESET CYAN CAP_ROUND_R RESET
 #define H_BLUE(string) BLUE CAP_ROUND_L BG_BLUE WHITE string RESET BLUE CAP_ROUND_R RESET
 #define H_MAGENTA(string) MAGENTA CAP_ROUND_L BG_MAGENTA WHITE string RESET MAGENTA CAP_ROUND_R RESET
-#define H_CYAN(string) CYAN CAP_ROUND_L BG_CYAN WHITE string RESET CYAN CAP_ROUND_R RESET
 #define H_WHITE(string) WHITE CAP_ROUND_L BG_WHITE BLACK string RESET WHITE CAP_ROUND_R RESET
 
 #endif
