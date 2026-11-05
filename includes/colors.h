@@ -6,7 +6,7 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 12:18:44 by hugolefevre       #+#    #+#             */
-/*   Updated: 2026/11/05 18:00:09 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/11/05 18:13:38 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,25 @@
 #define BG_WHITE "\033[47m"
 
 #define INFO WHITE CAP_ROUND_L BG_WHITE BLACK " INFO " RESET WHITE CAP_ROUND_R RESET
-#define DEBUG BLUE CAP_ROUND_L BG_BLUE BLACK	 " DEBUG " RESET BLUE CAP_ROUND_R RESET
+#define DEBUG BLUE CAP_ROUND_L BG_BLUE BLACK " DEBUG " RESET BLUE CAP_ROUND_R RESET
 #define WARNING YELLOW CAP_ROUND_L BG_YELLOW " WARNING " RESET YELLOW CAP_ROUND_R RESET
 #define ERROR RED CAP_ROUND_L BG_RED " ERROR " RESET RED CAP_ROUND_R RESET
 
-#define PASSES GREEN CAP_ROUND_L BG_GREEN BLACK " PASSES " RESET GREEN CAP_ROUND_R RESET
-#define PASS GREEN CAP_ROUND_L BG_GREEN BLACK " PASS " RESET GREEN CAP_ROUND_R RESET
-#define FAILED RED CAP_ROUND_L BG_RED WHITE " FAILED " RESET RED CAP_ROUND_R RESET
-#define FAIL RED CAP_ROUND_L BG_RED WHITE " FAIL " RESET RED CAP_ROUND_R RESET
+#define PASSES	GREEN CAP_ROUND_L BG_GREEN BLACK " PASSES " RESET GREEN CAP_ROUND_R RESET
+#define PASS	GREEN CAP_ROUND_L BG_GREEN BLACK " PASS " RESET GREEN CAP_ROUND_R RESET
+#define FAILED	RED CAP_ROUND_L BG_RED WHITE " FAILED " RESET RED CAP_ROUND_R RESET
+#define FAIL	RED CAP_ROUND_L BG_RED WHITE " FAIL " RESET RED CAP_ROUND_R RESET
 
 #define BOOL_STR(boolean) ((boolean) ? GREEN CAP_ROUND_L BG_GREEN BLACK "true" RESET GREEN CAP_ROUND_R RESET : RED CAP_ROUND_L BG_RED WHITE "false" RESET RED CAP_ROUND_R RESET)
-// #define BOOL_STR(boolean) ((boolean) ? "true" : "false")
+
+#define HEADER(string) CAP_ROUND_L BG_WHITE BLACK string RESET CAP_ROUND_R
+#define H_BLACK(string) BLACK CAP_ROUND_L BG_BLACK WHITE string RESET BLACK CAP_ROUND_R RESET
+#define H_RED(string) RED CAP_ROUND_L BG_RED WHITE string RESET RED CAP_ROUND_R RESET
+#define H_GREEN(string) GREEN CAP_ROUND_L BG_GREEN BLACK string RESET GREEN CAP_ROUND_R RESET
+#define H_YELLOW(string) YELLOW CAP_ROUND_L BG_YELLOW BLACK string RESET YELLOW CAP_ROUND_R RESET
+#define H_BLUE(string) BLUE CAP_ROUND_L BG_BLUE WHITE string RESET BLUE CAP_ROUND_R RESET
+#define H_MAGENTA(string) MAGENTA CAP_ROUND_L BG_MAGENTA WHITE string RESET MAGENTA CAP_ROUND_R RESET
+#define H_CYAN(string) CYAN CAP_ROUND_L BG_CYAN WHITE string RESET CYAN CAP_ROUND_R RESET
+#define H_WHITE(string) WHITE CAP_ROUND_L BG_WHITE BLACK string RESET WHITE CAP_ROUND_R RESET
 
 #endif
