@@ -50,9 +50,10 @@ void	init_nm(t_nm *nm, char **argv)
 	return ;
 }
 
-void	print_nm(t_nm *nm)
+void	print_nm(t_nm *nm unused)
 {
 	AUTO_LOG;
+
 	LOG(GREEN "program_name " RESET H("%s"), nm->program_name);
 	LOG(MAGENTA "is_bonus" RESET " %s", BOOL_STR(nm->is_bonus));
 	LOG(MAGENTA "is_64bits" RESET " %s", BOOL_STR(nm->is_64bits));
@@ -77,30 +78,33 @@ int	main(int argc, char **argv)
 
 	// loop over each files
 	t_file_name	*temp = nm->filenames;
+	int	counter = 1;
 	while (temp && temp->name)
 	{
-		LOG("Running on " H("%s") RESET, temp->name);
+		LOG("Running on " H("%s") " " H("%d/%d") RESET, temp->name, counter, nm->files_count);
 		if (parse_elf_hdr(temp->name, nm) != 0)
 		{
 			close_file(nm);
 			temp = temp->next;
+			counter++;
 			continue;
 		}
 		parse_section_header(nm);
 		// parse_symbols(nm);
 		temp = temp->next;
+		counter++;
 	}
 
 	// free and exit
 	free_nm(nm);
-	LOG(HEADER("test"));
-	LOG(H_BLACK("test"));
-	LOG(H_RED("test"));
-	LOG(H_YELLOW("test"));
-	LOG(H_GREEN("test"));
-	LOG(H_CYAN("test"));
-	LOG(H_BLUE("test"));
-	LOG(H_MAGENTA("test"));
-	LOG(H_WHITE("test"));
+	// LOG(HEADER("test"));
+	// LOG(H_BLACK("test"));
+	// LOG(H_RED("test"));
+	// LOG(H_YELLOW("test"));
+	// LOG(H_GREEN("test"));
+	// LOG(H_CYAN("test"));
+	// LOG(H_BLUE("test"));
+	// LOG(H_MAGENTA("test"));
+	// LOG(H_WHITE("test"));
 	return (g_exit_status);
 }
