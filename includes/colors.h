@@ -6,7 +6,7 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 12:18:44 by hugolefevre       #+#    #+#             */
-/*   Updated: 2026/11/05 18:28:19 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/11/06 12:28:05 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,17 @@
 #define H_BLUE(string) BLUE CAP_ROUND_L BG_BLUE WHITE string RESET BLUE CAP_ROUND_R RESET
 #define H_MAGENTA(string) MAGENTA CAP_ROUND_L BG_MAGENTA WHITE string RESET MAGENTA CAP_ROUND_R RESET
 #define H_WHITE(string) WHITE CAP_ROUND_L BG_WHITE BLACK string RESET WHITE CAP_ROUND_R RESET
+
+#include <string.h>
+static inline const char	*indent(const char *str)
+{
+	size_t		len = strlen(str);
+	static char	buf[128];
+
+	if (len >= sizeof(buf)) len = sizeof(buf) - 1;
+	memset(buf, ' ', len);
+	buf[len] = '\0';
+	return (buf);
+}
 
 #endif
