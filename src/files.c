@@ -6,13 +6,11 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/28 13:17:05 by ldalmass          #+#    #+#             */
-/*   Updated: 2026/11/06 12:25:13 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/11/06 14:05:00 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_nm.h"
-
-
 
 bool	open_file(const char *path, t_nm *nm)
 {
@@ -64,8 +62,6 @@ bool	open_file(const char *path, t_nm *nm)
 		LOG(WARNING "%s: Warning: mmap failed to map %s into memory.\n" RESET, nm->program_name, path);
 		return (print_mmap_errors(new_stats, nm), new_mapping = NULL, true);
 	}
-	dprintf(STDERR_FILENO, "%s: " YELLOW "Warning: mmap failed to map %s into memory.\n" RESET, nm->program_name, path);
-	dprintf(STDERR_FILENO, "%s" YELLOW "  This can happen on an empty file\n" RESET, indent(nm->program_name));
 
 	// Check and free the current map if any
 	if (nm->file != NULL)
