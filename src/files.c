@@ -6,7 +6,7 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/28 13:17:05 by ldalmass          #+#    #+#             */
-/*   Updated: 2026/11/09 16:22:09 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/11/09 16:35:46 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ bool	open_file(const char *path, t_nm *nm)
 	// Check the file
 	if (stat(path, &new_stats) < 0)
 	{
-		dprintf(STDERR_FILENO, YELLOW "%s: Failed to get file's details from '%s'\n" RESET, nm->program_name, path);
+		dprintf(STDERR_FILENO, YELLOW "%s: No such file '%s'\n" RESET, nm->program_name, path);
 		goto error;
 	}
 	if (S_ISDIR(new_stats.st_mode))
@@ -36,6 +36,7 @@ bool	open_file(const char *path, t_nm *nm)
 		dprintf(STDERR_FILENO, YELLOW "%s: Warning: '%s' is not a regular file.\n" RESET, nm->program_name, path);
 		goto error;
 	}
+	if (new_stats.st_size == 0) goto error;
 
 	// Map the file into memory
 	fd = open(path, O_RDONLY);

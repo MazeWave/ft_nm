@@ -6,7 +6,7 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/28 17:27:06 by ldalmass          #+#    #+#             */
-/*   Updated: 2026/11/09 15:54:23 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/11/09 16:37:18 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ bool	parse_section_header(t_nm *nm)
 		goto error;
 	return (LOG(PASS), false);
 	error:
+		dprintf(STDERR_FILENO, YELLOW "%s: Warning: File format not recognized" RESET, nm->program_name);
 		LOG(FAIL);
 		return true;
 }
