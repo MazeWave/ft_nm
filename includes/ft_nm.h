@@ -57,11 +57,11 @@ typedef struct s_file_name
 
 typedef struct s_ehdr
 {
-	uint16_t		type;
-	uint64_t		shoff;
-	uint16_t		shentsize;
-	uint16_t		shnum;
-	uint16_t		shstrndx;
+	uint16_t	type;
+	uint64_t	shoff;
+	uint16_t	shentsize;
+	uint16_t	shnum;
+	uint16_t	shstrndx;
 }	t_ehdr;
 
 // typedef struct s_sym
@@ -100,6 +100,7 @@ typedef struct s_nm
 
 	// Opened file in memory (whole file)
 	void			*file;
+	char			*current_opened_filename;
 	struct stat		st;
 	struct s_ehdr	elf_hdr;
 	struct s_sym	*elf_symbols;
@@ -146,9 +147,10 @@ void	close_file(t_nm *nm);
 void	print_mmap_errors(struct stat st, t_nm *nm);
 
 // parse_elf_hdr.c
-bool	parse_elf(const char *path, t_nm *nm unused);
+bool	parse_elf(const char *path, t_nm *nm);
 bool	parse_magic_number(t_nm *nm);
 bool	parse_bits(t_nm *nm);
 
 // parse_elf_sections.c
 bool	parse_section_header(t_nm *nm);
+bool	parse_sht_symtab(t_nm *nm);

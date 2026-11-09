@@ -38,6 +38,7 @@ void	init_nm(t_nm *nm, char **argv)
 	nm->files_count = 0;
 	nm->files_list = NULL;
 	nm->file = NULL;
+	nm->current_opened_filename = NULL;
 
 	// Flags
 	nm->is_bonus = (strstr(argv[0], "_bonus") == NULL) ? false : true;
@@ -78,22 +79,25 @@ int	main(int argc, char **argv)
 
 	// loop over each files
 	t_file_name	*temp = nm->filenames;
-	int	counter = 1;
+	int			counter = 1;
 	while (temp && temp->name)
 	{
 		LOG("Running on " H("%s") " " H("%d/%d") RESET, temp->name, counter, nm->files_count);
-		if (parse_elf(temp->name, nm) != 0)
-		{
+		nm->current_opened_filename = strdup(temp->name);
+		if (parse_elf(temp->name, nm))	goto fail;
+		if (parse_section_header(nm))	goto fail;
+		if (parse_sht_symtab(nm))		goto fail;
+		// parse_symbols(nm);
+		goto next;
+
+		fail:
+			g_exit_status = 1;
+		next:
 			close_file(nm);
 			temp = temp->next;
 			counter++;
-			g_exit_status = 1;
-			continue;
-		}
-		if (parse_section_header(nm)) g_exit_status = 0;
-		// parse_symbols(nm);
-		temp = temp->next;
-		counter++;
+			free(nm->current_opened_filename);
+			nm->current_opened_filename = NULL;
 	}
 
 	free_nm(nm);

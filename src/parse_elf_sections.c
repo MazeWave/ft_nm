@@ -6,7 +6,7 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/28 17:27:06 by ldalmass          #+#    #+#             */
-/*   Updated: 2026/11/09 17:02:11 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/11/09 17:46:43 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,19 @@ bool	parse_section_header(t_nm *nm)
 	error:
 		dprintf(STDERR_FILENO, YELLOW "%s: Warning: File format not recognized" RESET, nm->program_name);
 		LOG(FAIL);
+		return true;
+}
+
+bool	parse_sht_symtab(t_nm *nm)
+{
+	AUTO_LOG;
+
+	goto error;	// TODO: implement sht symtab parsing
+
+	LOG(PASS);
+	return false;
+	error:
+		LOG(FAIL);
+		dprintf(STDERR_FILENO, YELLOW "%s: %s: No symbols\n" RESET, nm->program_name, nm->current_opened_filename);
 		return true;
 }
