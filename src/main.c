@@ -83,7 +83,7 @@ int	main(int argc, char **argv)
 	while (temp && temp->name)
 	{
 		LOG("Running on " H("%s") " " H("%d/%d") RESET, temp->name, counter, nm->files_count);
-		nm->current_opened_filename = strdup(temp->name);
+		if (!nm->current_opened_filename) nm->current_opened_filename = strdup(temp->name);
 		if (parse_elf(temp->name, nm))	goto fail;
 		if (parse_section_header(nm))	goto fail;
 		if (parse_sht_symtab(nm))		goto fail;
