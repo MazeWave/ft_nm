@@ -17,7 +17,7 @@ bool	parse_bits(t_nm *nm)
 	AUTO_LOG;
 	uint8_t	*file = nm->file;
 
-	if (is_inbound(nm, 0, EI_NIDENT))	goto error;
+	if (!is_inbound(nm, 0, EI_NIDENT))	goto error;
 	if (file[EI_CLASS] == ELFCLASSNONE)	goto error;
 	if (file[EI_CLASS] > ELFCLASS64)	goto error;
 
@@ -39,14 +39,56 @@ bool	parse_magic_number(t_nm *nm)
 	else return (LOG(FAIL), true);
 }
 
+bool	fill_elf_header(t_nm *nm)
+{
+	AUTO_LOG;
+
+	if (nm->is_64bits)
+	{
+		if (!is_inbound(nm, 0, sizeof(Elf64_Ehdr)))	goto error;
+		Elf64_Ehdr	*hdr = nm->file;
+		nm->elf_hdr = (t_ehdr)
+		{
+			hdr->e_type,
+			hdr->e_machine,
+			hdr->e_shoff,
+			hdr->e_shentsize,
+			hdr->e_shnum,
+			hdr->e_shstrndx,
+		};
+	}
+	else
+	{
+		if (!is_inbound(nm, 0, sizeof(Elf32_Ehdr)))	goto error;
+		Elf32_Ehdr	*hdr = nm->file;
+		nm->elf_hdr = (t_ehdr)
+		{
+			hdr->e_type,
+			hdr->e_machine,
+			hdr->e_shoff,
+			hdr->e_shentsize,
+			hdr->e_shnum,
+			hdr->e_shstrndx,
+		};
+	}
+
+	LOG(PASS);
+	return false;
+	error:
+		LOG(FAIL);
+		return true;
+}
+
 bool	parse_elf(const char *path, t_nm *nm)
 {
 	AUTO_LOG;
 
-	if (open_file(path, nm) != 0)		return (true);
-	if (parse_magic_number(nm) != 0)	return (true);
-	if (parse_bits(nm) != 0)			return (true);
+	if (open_file(path, nm))	return (true);
+	if (parse_magic_number(nm))	return (true);
+	if (parse_bits(nm))			return (true);
 
+	
+	if (fill_elf_header(nm))	return(true);
 	print_nm(nm);
 	return (false);
 }

@@ -55,17 +55,11 @@ typedef struct s_file_name
 	struct s_file_name	*next;
 }	t_file_name;
 
-typedef union s_shoff
-{
-	uint64_t	shoff64;
-	uint32_t	shoff32;
-}	t_shoff;
-
 typedef struct s_ehdr
 {
 	uint16_t		type;
 	uint16_t		machine;
-	union s_shoff	shoff;
+	uint64_t		shoff;
 	uint16_t		shentsize;
 	uint16_t		shnum;
 	uint16_t		shstrndx;

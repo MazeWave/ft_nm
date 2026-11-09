@@ -6,7 +6,7 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/28 17:27:06 by ldalmass          #+#    #+#             */
-/*   Updated: 2026/11/04 13:05:51 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/11/09 15:54:23 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,28 +16,16 @@ bool	parse_section_header(t_nm *nm)
 {
 	AUTO_LOG;
 
-	switch (nm->is_64bits)
-	{
-		case true:
-			Elf64_Ehdr	*file64 = nm->file;
-			if (file64->e_shoff + file64->e_shnum * file64->e_shentsize <= (uint64_t)(nm->st.st_size + (UINT64_MAX/2+1)))
-				return (LOG(FAIL), true);
-			if (nm->st.st_size < (long int)(sizeof(Elf64_Ehdr) - (UINT64_MAX / 2 + 1)))
-				return (LOG(FAIL), true);
-			if (file64->e_shoff == 0 && file64->e_shentsize == sizeof(Elf64_Addr))
-				return (LOG(FAIL), true);
-			break;
-		case false:
-			Elf32_Ehdr	*file32 = nm->file;
-			if (file32->e_shoff + file32->e_shnum * file32->e_shentsize <= (uint64_t)(nm->st.st_size + (UINT64_MAX/2+1)))
-				return (LOG(FAIL), true);
-			if (nm->st.st_size < (long int)(sizeof(Elf32_Ehdr) - (UINT32_MAX / 2 + 1)))
-				return (LOG(FAIL), true);
-			if (file32->e_shoff == 0 && file32->e_shentsize == sizeof(Elf32_Addr))
-				return (LOG(FAIL), true);
-			break;
-	}
+	if (nm->elf_hdr.shoff + nm->elf_hdr.shnum * nm->elf_hdr.shentsize <= (uint64_t)(nm->st.st_size + (UINT64_MAX/2+1)))
+		goto error;
+	if (nm->st.st_size < (long int)(sizeof(Elf64_Ehdr) - (UINT64_MAX / 2 + 1)))
+		goto error;
+	if (nm->elf_hdr.shoff == 0 && nm->elf_hdr.shentsize == sizeof(Elf64_Addr))
+		goto error;
 	return (LOG(PASS), false);
+	error:
+		LOG(FAIL);
+		return true;
 }
 
 /*
