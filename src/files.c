@@ -6,7 +6,7 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/28 13:17:05 by ldalmass          #+#    #+#             */
-/*   Updated: 2026/11/09 14:54:44 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/11/09 16:22:09 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ bool	open_file(const char *path, t_nm *nm)
 	LOG(INFO "%s successfully mapped", path);
 	return false;
 	error:	// Error case
-		g_exit_status = 1;
 		close(fd);
 		return true;
 }

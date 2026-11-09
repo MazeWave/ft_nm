@@ -87,24 +87,15 @@ int	main(int argc, char **argv)
 			close_file(nm);
 			temp = temp->next;
 			counter++;
+			g_exit_status = 1;
 			continue;
 		}
-		parse_section_header(nm);
+		g_exit_status = parse_section_header(nm);
 		// parse_symbols(nm);
 		temp = temp->next;
 		counter++;
 	}
 
-	// free and exit
 	free_nm(nm);
-	// LOG(HEADER("test"));
-	// LOG(H_BLACK("test"));
-	// LOG(H_RED("test"));
-	// LOG(H_YELLOW("test"));
-	// LOG(H_GREEN("test"));
-	// LOG(H_CYAN("test"));
-	// LOG(H_BLUE("test"));
-	// LOG(H_MAGENTA("test"));
-	// LOG(H_WHITE("test"));
 	return (g_exit_status);
 }

@@ -6,7 +6,7 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/27 14:22:16 by ldalmass          #+#    #+#             */
-/*   Updated: 2026/11/05 13:33:14 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/11/09 16:17:09 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,11 @@ void	opts_parser(int argc, char **argv, t_nm *nm)
 	print_nm(nm);
 
 	// No file specified, defaulting to read a.out
-	if (nm->files_count == 0) add_file_name("a.out", nm);
+	if (nm->files_count == 0)
+	{
+		add_file_name("a.out", nm);
+		nm->files_count = 1;
+	}
 	list_file_name(nm);
 
 	return ;
