@@ -82,7 +82,7 @@ int	main(int argc, char **argv)
 	while (temp && temp->name)
 	{
 		LOG("Running on " H("%s") " " H("%d/%d") RESET, temp->name, counter, nm->files_count);
-		if (parse_elf_hdr(temp->name, nm) != 0)
+		if (parse_elf(temp->name, nm) != 0)
 		{
 			close_file(nm);
 			temp = temp->next;

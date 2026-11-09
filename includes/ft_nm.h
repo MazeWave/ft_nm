@@ -153,10 +153,9 @@ void	close_file(t_nm *nm);
 void	print_mmap_errors(struct stat st, t_nm *nm);
 
 // parse_elf_hdr.c
-bool	parse_elf_hdr(const char *path, t_nm *nm unused);
+bool	parse_elf(const char *path, t_nm *nm unused);
 bool	parse_magic_number(t_nm *nm);
 bool	parse_bits(t_nm *nm);
-bool	parse_architecture(t_nm *nm);
 
 // parse_elf_sections.c
 bool	parse_section_header(t_nm *nm);
