@@ -90,7 +90,7 @@ int	main(int argc, char **argv)
 			g_exit_status = 1;
 			continue;
 		}
-		g_exit_status = parse_section_header(nm);
+		if (parse_section_header(nm)) g_exit_status = 0;
 		// parse_symbols(nm);
 		temp = temp->next;
 		counter++;
