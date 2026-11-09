@@ -6,7 +6,7 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/28 13:17:05 by ldalmass          #+#    #+#             */
-/*   Updated: 2026/11/09 13:21:31 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/11/09 14:54:44 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,38 +16,35 @@ bool	open_file(const char *path, t_nm *nm)
 {
 	AUTO_LOG;
 
-	int			fd = open(path, O_RDONLY);
+	int			fd = -1;
 	void		*new_mapping = NULL;
-	struct stat	new_fstats;
 	struct stat	new_stats;
-	// struct stat	new_stats;
 
-	// Open and map the file
-	if (fd < 0)
-	{
-		dprintf(STDERR_FILENO, YELLOW "%s: No such a file.\n" RESET, nm->program_name);
-		LOG(WARNING "%s: No such a file." RESET, nm->program_name);
-		goto error;
-	}
-	if (stat(path, &new_stats) < 0 || fstat(fd, &new_fstats) < 0)
+	// Check the file
+	if (stat(path, &new_stats) < 0)
 	{
 		dprintf(STDERR_FILENO, YELLOW "%s: Failed to get file's details from '%s'\n" RESET, nm->program_name, path);
-		LOG(WARNING "%s: Failed to get file's details from '%s'" RESET, nm->program_name, path);
 		goto error;
 	}
-	if (S_ISDIR(new_fstats.st_mode))
+	if (S_ISDIR(new_stats.st_mode))
 	{
 		dprintf(STDERR_FILENO, YELLOW "%s: Warning: '%s' is a directory.\n" RESET, nm->program_name, path);
-		LOG(WARNING "%s: Warning: '%s' is a directory.", nm->program_name, path);
 		goto error;
 	}
-	if (!S_ISREG(new_fstats.st_mode))
+	if (!S_ISREG(new_stats.st_mode))
 	{
 		dprintf(STDERR_FILENO, YELLOW "%s: Warning: '%s' is not a regular file.\n" RESET, nm->program_name, path);
-		LOG(WARNING "%s: Warning: '%s' is not a regular file.", nm->program_name, path);
 		goto error;
 	}
-	new_mapping = mmap(NULL, new_fstats.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
+
+	// Map the file into memory
+	fd = open(path, O_RDONLY);
+	if (fd < 0)
+	{
+		dprintf(STDERR_FILENO, YELLOW "%s: Warning: %s: %s\n" RESET, nm->program_name, path, strerror(errno));
+		goto error;
+	}
+	new_mapping = mmap(NULL, new_stats.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
 	if (new_mapping == MAP_FAILED)
 	{
 		dprintf(STDERR_FILENO, "%s: " YELLOW "Warning: mmap failed to map %s into memory.\n" RESET, nm->program_name, path);
@@ -57,6 +54,7 @@ bool	open_file(const char *path, t_nm *nm)
 		new_mapping = NULL;
 		goto error;
 	}
+	close(fd);
 
 	// Check and free the current map if any
 	if (nm->file != NULL)
@@ -68,7 +66,7 @@ bool	open_file(const char *path, t_nm *nm)
 
 	// Copy the newly mapped region to our global one
 	nm->file = new_mapping;
-	nm->st = new_fstats;
+	nm->st = new_stats;
 	LOG(INFO "%s successfully mapped", path);
 	return false;
 	error:	// Error case
