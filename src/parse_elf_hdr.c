@@ -17,9 +17,9 @@ bool	parse_bits(t_nm *nm)
 	AUTO_LOG;
 	uint8_t	*file = nm->file;
 
-	if (is_inbound(nm, nm->st.st_size, EI_NIDENT))	goto error;
-	if (file[EI_CLASS] == ELFCLASSNONE)				goto error;
-	if (file[EI_CLASS] > ELFCLASS64)				goto error;
+	if (is_inbound(nm, 0, EI_NIDENT))	goto error;
+	if (file[EI_CLASS] == ELFCLASSNONE)	goto error;
+	if (file[EI_CLASS] > ELFCLASS64)	goto error;
 
 	// Set if we are using 64bits or 32bits
 	nm->is_64bits = (file[EI_CLASS] == ELFCLASS64);
