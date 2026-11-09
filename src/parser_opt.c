@@ -6,7 +6,7 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/27 14:22:16 by ldalmass          #+#    #+#             */
-/*   Updated: 2026/11/09 16:17:09 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/11/09 18:04:13 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,10 @@ void	opts_parser(int argc, char **argv, t_nm *nm)
 				can_use_bonus_flag(nm, STDOUT_FILENO);
 				nm->no_sorting = true;
 				break;
+			case 'b':
+				can_use_bonus_flag(nm, STDOUT_FILENO);
+				nm->is_prettier = true;
+				break;
 
 			// MANDATORY
 			case 'v':
@@ -103,6 +107,7 @@ void	help(t_nm *nm, int fd)
 		case true:
 			dprintf(fd, GREEN "Usage: %s [option(s)] [file(s)]\nList symbols in [file(s)] (a.out by default).\n" RESET, nm->program_name);
 			dprintf(fd, BLUE "Options:\n" RESET);
+			dprintf(fd, MAGENTA "  -b        : Prettier display, beautiful isn't it ?\n" RESET);
 			dprintf(fd, MAGENTA "  -a        : Display debugger-only symbols\n" RESET);
 			dprintf(fd, MAGENTA "  -g        : Display only external symbols\n" RESET);
 			dprintf(fd, MAGENTA "  -u        : Display only undefined symbols\n" RESET);

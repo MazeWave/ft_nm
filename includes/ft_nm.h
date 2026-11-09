@@ -108,6 +108,7 @@ typedef struct s_nm
 	// Flags
 	bool	is_bonus;
 	bool	is_64bits;
+	bool	is_prettier;
 	bool	display_debugger_symbols;
 	bool	display_external_symbols;
 	bool	display_undefined_symbols;

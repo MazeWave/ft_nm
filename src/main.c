@@ -43,6 +43,7 @@ void	init_nm(t_nm *nm, char **argv)
 	// Flags
 	nm->is_bonus = (strstr(argv[0], "_bonus") == NULL) ? false : true;
 	nm->is_64bits = false;
+	nm->is_prettier = false;
 	nm->display_debugger_symbols = false;
 	nm->display_external_symbols = false;
 	nm->display_undefined_symbols = false;
