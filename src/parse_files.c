@@ -43,8 +43,7 @@ void	add_file_name(char *name, t_nm *nm)
 	}
 
 	// Got to latest node
-	while (temp->next != NULL)
-		temp = temp->next;
+	while (temp->next != NULL) temp = temp->next;
 
 	// Fill the name on the latest node if its empty
 	if (temp->name == NULL)
