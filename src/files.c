@@ -6,7 +6,7 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/28 13:17:05 by ldalmass          #+#    #+#             */
-/*   Updated: 2026/11/09 13:15:07 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/11/09 13:21:31 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,6 @@ bool	open_file(const char *path, t_nm *nm)
 	// struct stat	new_stats;
 
 	// Open and map the file
-	error:	// Error case
-		g_exit_status = 1;
-		close(fd);
-		return true;
 	if (fd < 0)
 	{
 		dprintf(STDERR_FILENO, YELLOW "%s: No such a file.\n" RESET, nm->program_name);
@@ -52,15 +48,13 @@ bool	open_file(const char *path, t_nm *nm)
 		goto error;
 	}
 	new_mapping = mmap(NULL, new_fstats.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
-	defer(
-		print_mmap_errors(new_stats, nm);
-		new_mapping = NULL;
-	);
 	if (new_mapping == MAP_FAILED)
 	{
 		dprintf(STDERR_FILENO, "%s: " YELLOW "Warning: mmap failed to map %s into memory.\n" RESET, nm->program_name, path);
 		dprintf(STDERR_FILENO, "%s" YELLOW "This can happen on an empty file\n" RESET, indent(nm->program_name));
 		LOG(WARNING "%s: Warning: mmap failed to map %s into memory.\n" RESET, nm->program_name, path);
+		print_mmap_errors(new_stats, nm);
+		new_mapping = NULL;
 		goto error;
 	}
 
@@ -77,6 +71,10 @@ bool	open_file(const char *path, t_nm *nm)
 	nm->st = new_fstats;
 	LOG(INFO "%s successfully mapped", path);
 	return false;
+	error:	// Error case
+		g_exit_status = 1;
+		close(fd);
+		return true;
 }
 
 void	close_file(t_nm *nm)
