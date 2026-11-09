@@ -50,7 +50,6 @@ bool	fill_elf_header(t_nm *nm)
 		nm->elf_hdr = (t_ehdr)
 		{
 			hdr->e_type,
-			hdr->e_machine,
 			hdr->e_shoff,
 			hdr->e_shentsize,
 			hdr->e_shnum,
@@ -64,7 +63,6 @@ bool	fill_elf_header(t_nm *nm)
 		nm->elf_hdr = (t_ehdr)
 		{
 			hdr->e_type,
-			hdr->e_machine,
 			hdr->e_shoff,
 			hdr->e_shentsize,
 			hdr->e_shnum,

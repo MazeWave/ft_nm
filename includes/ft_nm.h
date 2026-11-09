@@ -58,7 +58,6 @@ typedef struct s_file_name
 typedef struct s_ehdr
 {
 	uint16_t		type;
-	uint16_t		machine;
 	uint64_t		shoff;
 	uint16_t		shentsize;
 	uint16_t		shnum;
