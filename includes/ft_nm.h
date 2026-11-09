@@ -32,6 +32,15 @@
 
 #define unused __attribute__((unused))
 
+// BEGIN Defer function
+#define CAT_(a, b) a##b
+#define CAT(a, b) CAT_(a, b)
+
+#define defer(...) \
+    void CAT(_defer_fn_, __LINE__)(int *_d) { (void)_d; __VA_ARGS__; } \
+    int CAT(_defer_v_, __LINE__) __attribute__((cleanup(CAT(_defer_fn_, __LINE__)))) = 0
+// END Defer function
+
 #define true 1
 #define false 0
 #define bool int
