@@ -6,7 +6,7 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/27 14:08:57 by ldalmass          #+#    #+#             */
-/*   Updated: 2026/1111/0404 1515:0909:4848 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/11/12 13:30:3636 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	init_nm(t_nm *nm, char **argv)
 	// Flags
 	nm->is_bonus = (strstr(argv[0], "_bonus") == NULL) ? false : true;
 	nm->is_64bits = false;
+	nm->is_big_endian = false;
 	nm->is_prettier = false;
 	nm->display_debugger_symbols = false;
 	nm->display_external_symbols = false;

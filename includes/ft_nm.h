@@ -26,6 +26,7 @@
 #include <sys/stat.h>
 #include <sys/mman.h>
 #include <elf.h>
+#include <endian.h>
 
 #include "log.h"
 #include "colors.h"
@@ -55,7 +56,7 @@ typedef struct s_file_name
 	struct s_file_name	*next;
 }	t_file_name;
 
-typedef struct s_ehdr
+typedef struct s_ehdr	// ELF header
 {
 	uint16_t	type;
 	uint64_t	shoff;
@@ -64,34 +65,47 @@ typedef struct s_ehdr
 	uint16_t	shstrndx;
 }	t_ehdr;
 
+typedef struct s_shdr	// Section header
+{
+	uint64_t	name;
+	uint64_t	type;
+	uint64_t	flags;
+	uint64_t	offset;
+	uint64_t	size;
+	uint64_t	link;
+	uint64_t	info;
+	uint64_t	entsize;
+}	t_shdr;
+
 // typedef struct s_sym
 // {
 // 	char		*name;
 // 	uint64_t	value;
 // 	uint8_t		info;
+// 	uint64_t	size;
 // 	uint8_t		other;
 // 	uint16_t	shndx;
 // }	t_sym;
 
-typedef struct s_elf32_sym
-{
-	uint32_t		st_name;
-	Elf32_Addr		st_value;
-	uint32_t		st_size;
-	unsigned char	st_info;
-	unsigned char	st_other;
-	uint16_t		st_shndx;
-} t_elf32_sym;
+// typedef struct s_elf32_sym
+// {
+// 	uint32_t		st_name;
+// 	Elf32_Addr		st_value;
+// 	uint32_t		st_size;
+// 	unsigned char	st_info;
+// 	unsigned char	st_other;
+// 	uint16_t		st_shndx;
+// } t_elf32_sym;
 
-typedef struct s_elf64_sym
-{
-	uint32_t	 	st_name;
-	unsigned char	st_info;
-	unsigned char	st_other;
-	uint16_t		st_shndx;
-	Elf64_Addr		st_value;
-	uint64_t		st_size;
-} t_elf64_sym;
+// typedef struct s_elf64_sym
+// {
+// 	uint32_t	 	st_name;
+// 	unsigned char	st_info;
+// 	unsigned char	st_other;
+// 	uint16_t		st_shndx;
+// 	Elf64_Addr		st_value;
+// 	uint64_t		st_size;
+// } t_elf64_sym;
 
 typedef struct s_nm
 {
@@ -103,11 +117,13 @@ typedef struct s_nm
 	char			*current_opened_filename;
 	struct stat		st;
 	struct s_ehdr	elf_hdr;
+	struct s_shdr	sh_hdr;
 	struct s_sym	*elf_symbols;
 
 	// Flags
 	bool	is_bonus;
 	bool	is_64bits;
+	bool	is_big_endian;
 	bool	is_prettier;
 	bool	display_debugger_symbols;
 	bool	display_external_symbols;
@@ -130,7 +146,7 @@ void	free_nm(t_nm *nm);
 void	init_nm(t_nm *nm, char **argv);
 void	print_nm(t_nm *nm);
 
-// parset_opt.c
+// parser_opt.c
 void	opts_parser(int argc, char **argv, t_nm *nm);
 void	version(t_nm *nm);
 void	help(t_nm *nm, int fd);
@@ -140,7 +156,6 @@ void	init_file_name(t_nm *nm);
 void	add_file_name(char *name, t_nm *nm);
 void	list_file_name(t_nm *nm);
 void	free_file_name(t_nm *nm);
-bool	is_inbound(t_nm *nm, uint64_t offset, uint64_t size);
 
 // files.c
 bool	open_file(const char *path, t_nm *nm);
@@ -155,3 +170,10 @@ bool	parse_bits(t_nm *nm);
 // parse_elf_sections.c
 bool	parse_section_header(t_nm *nm);
 bool	parse_sht_symtab(t_nm *nm);
+
+// helper_functions.c
+bool		is_inbound(t_nm *nm, uint64_t offset, uint64_t size);
+bool		get_shdr_header_at(t_nm *nm, uint64_t id);
+uint16_t	rd16(t_nm *nm, uint16_t bytes);
+uint32_t	rd32(t_nm *nm, uint32_t bytes);
+uint64_t	rd64(t_nm *nm, uint64_t bytes);

@@ -6,7 +6,7 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/28 13:17:05 by ldalmass          #+#    #+#             */
-/*   Updated: 2026/11/09 16:35:46 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/11/10 14:21:50 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,10 @@ void	close_file(t_nm *nm)
 {
 	AUTO_LOG;
 
-	munmap(nm->file, nm->st.st_size);
+	if (nm->file)
+		munmap(nm->file, nm->st.st_size);
 	nm->file = NULL;
-	nm->st.st_size = 0;
+	nm->st = (struct stat){0};
 	return ;
 }
 

@@ -23,11 +23,16 @@ bool	parse_bits(t_nm *nm)
 
 	// Set if we are using 64bits or 32bits
 	nm->is_64bits = (file[EI_CLASS] == ELFCLASS64);
+
+	// Check and set endianness
+	if (file[EI_DATA] == ELFDATANONE || EI_DATA > 2)	goto error;
+	nm->is_big_endian = (file[EI_DATA] == ELFDATA2MSB);
 	LOG(PASS);
 	return false;
 
 	error:
 		LOG(FAIL);
+		dprintf(STDERR_FILENO, YELLOW "%s: Warning: %s: file format not recognized." RESET, nm->program_name, nm->current_opened_filename);
 		return true;
 }
 
@@ -46,27 +51,29 @@ bool	fill_elf_header(t_nm *nm)
 	if (nm->is_64bits)
 	{
 		if (!is_inbound(nm, 0, sizeof(Elf64_Ehdr)))	goto error;
-		Elf64_Ehdr	*hdr = nm->file;
+		Elf64_Ehdr	hdr;
+	 	memcpy (&hdr, nm->file, sizeof(Elf64_Ehdr));
 		nm->elf_hdr = (t_ehdr)
 		{
-			hdr->e_type,
-			hdr->e_shoff,
-			hdr->e_shentsize,
-			hdr->e_shnum,
-			hdr->e_shstrndx,
+			.type = hdr.e_type,
+			.shoff = hdr.e_shoff,
+			.shentsize = hdr.e_shentsize,
+			.shnum = hdr.e_shnum,
+			.shstrndx = hdr.e_shstrndx,
 		};
 	}
 	else
 	{
 		if (!is_inbound(nm, 0, sizeof(Elf32_Ehdr)))	goto error;
-		Elf32_Ehdr	*hdr = nm->file;
+		Elf32_Ehdr	hdr;
+	 	memcpy (&hdr, nm->file, sizeof(Elf32_Ehdr));
 		nm->elf_hdr = (t_ehdr)
 		{
-			hdr->e_type,
-			hdr->e_shoff,
-			hdr->e_shentsize,
-			hdr->e_shnum,
-			hdr->e_shstrndx,
+			.type = hdr.e_type,
+			.shoff = hdr.e_shoff,
+			.shentsize = hdr.e_shentsize,
+			.shnum = hdr.e_shnum,
+			.shstrndx = hdr.e_shstrndx,
 		};
 	}
 

@@ -6,7 +6,7 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/27 14:22:16 by ldalmass          #+#    #+#             */
-/*   Updated: 2026/11/09 18:04:13 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/11/10 15:10:57 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,27 +37,27 @@ void	opts_parser(int argc, char **argv, t_nm *nm)
 		{
 			// BONUSES
 			case 'a':
-				can_use_bonus_flag(nm, STDOUT_FILENO);
+				can_use_bonus_flag(nm, STDERR_FILENO);
 				nm->display_debugger_symbols = true;
 				break;
 			case 'g':
-				can_use_bonus_flag(nm, STDOUT_FILENO);
+				can_use_bonus_flag(nm, STDERR_FILENO);
 				nm->display_external_symbols = true;
 				break;
 			case 'u':
-				can_use_bonus_flag(nm, STDOUT_FILENO);
+				can_use_bonus_flag(nm, STDERR_FILENO);
 				nm->display_undefined_symbols = true;
 				break;
 			case 'r':
-				can_use_bonus_flag(nm, STDOUT_FILENO);
+				can_use_bonus_flag(nm, STDERR_FILENO);
 				nm->revert_sorting = true;
 				break;
 			case 'p':
-				can_use_bonus_flag(nm, STDOUT_FILENO);
+				can_use_bonus_flag(nm, STDERR_FILENO);
 				nm->no_sorting = true;
 				break;
 			case 'b':
-				can_use_bonus_flag(nm, STDOUT_FILENO);
+				can_use_bonus_flag(nm, STDERR_FILENO);
 				nm->is_prettier = true;
 				break;
 
@@ -96,7 +96,7 @@ void	opts_parser(int argc, char **argv, t_nm *nm)
 
 void	version(t_nm *nm)
 {
-	dprintf(1, GREEN "%s on commit " BG_GREEN BLACK " %s " RESET ".\n" RESET, nm->program_name, GIT_COMMIT);
+	dprintf(STDOUT_FILENO, GREEN "%s on commit " BG_GREEN BLACK " %s " RESET ".\n" RESET, nm->program_name, GIT_COMMIT);
 	return ;
 }
 
