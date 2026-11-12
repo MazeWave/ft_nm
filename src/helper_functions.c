@@ -7,6 +7,46 @@ bool	is_inbound(t_nm *nm, uint64_t offset, uint64_t size)
 	return (true);
 }
 
+bool	fill_elf_header(t_nm *nm)
+{
+	AUTO_LOG;
+
+	if (nm->is_64bits)
+	{
+		if (!is_inbound(nm, 0, sizeof(Elf64_Ehdr)))	goto error;
+		Elf64_Ehdr	hdr;
+	 	memcpy (&hdr, nm->file, sizeof(Elf64_Ehdr));
+		nm->elf_hdr = (t_ehdr)
+		{
+			.type = rd16(nm, hdr.e_type),
+			.shoff = rd64(nm, hdr.e_shoff),
+			.shentsize = rd16(nm, hdr.e_shentsize),
+			.shnum = rd16(nm, hdr.e_shnum),
+			.shstrndx = rd16(nm, hdr.e_shstrndx),
+		};
+	}
+	else
+	{
+		if (!is_inbound(nm, 0, sizeof(Elf32_Ehdr)))	goto error;
+		Elf32_Ehdr	hdr;
+	 	memcpy (&hdr, nm->file, sizeof(Elf32_Ehdr));
+		nm->elf_hdr = (t_ehdr)
+		{
+			.type = rd16(nm, hdr.e_type),
+			.shoff = rd64(nm, hdr.e_shoff),
+			.shentsize = rd16(nm, hdr.e_shentsize),
+			.shnum = rd16(nm, hdr.e_shnum),
+			.shstrndx = rd16(nm, hdr.e_shstrndx),
+		};
+	}
+
+	LOG(PASS);
+	return false;
+	error:
+		LOG(FAIL);
+		return true;
+}
+
 bool	get_shdr_header_at(t_nm *nm, uint64_t id)
 {
 	AUTO_LOG;
@@ -21,14 +61,14 @@ bool	get_shdr_header_at(t_nm *nm, uint64_t id)
 		memcpy(&hdr, (uint8_t *)nm->file + offset, sizeof(hdr));
 		nm->sh_hdr = (t_shdr)
 		{
-			.name = hdr.sh_name,
-			.type = hdr.sh_type,
-			.flags = hdr.sh_flags,
-			.offset = hdr.sh_offset,
-			.size = hdr.sh_size,
-			.link = hdr.sh_link,
-			.info = hdr.sh_info,
-			.entsize = hdr.sh_entsize,
+			.name = rd64(nm, hdr.sh_name),
+			.type = rd64(nm, hdr.sh_type),
+			.flags = rd64(nm, hdr.sh_flags),
+			.offset = rd64(nm, hdr.sh_offset),
+			.size = rd64(nm, hdr.sh_size),
+			.link = rd64(nm, hdr.sh_link),
+			.info = rd64(nm, hdr.sh_info),
+			.entsize = rd64(nm, hdr.sh_entsize),
 		};
 	}
 	else
@@ -38,14 +78,14 @@ bool	get_shdr_header_at(t_nm *nm, uint64_t id)
 		memcpy(&hdr, (uint8_t *)nm->file + offset, sizeof(hdr));
 		nm->sh_hdr = (t_shdr)
 		{
-			.name = hdr.sh_name,
-			.type = hdr.sh_type,
-			.flags = hdr.sh_flags,
-			.offset = hdr.sh_offset,
-			.size = hdr.sh_size,
-			.link = hdr.sh_link,
-			.info = hdr.sh_info,
-			.entsize = hdr.sh_entsize,
+			.name = rd64(nm, hdr.sh_name),
+			.type = rd64(nm, hdr.sh_type),
+			.flags = rd64(nm, hdr.sh_flags),
+			.offset = rd64(nm, hdr.sh_offset),
+			.size = rd64(nm, hdr.sh_size),
+			.link = rd64(nm, hdr.sh_link),
+			.info = rd64(nm, hdr.sh_info),
+			.entsize = rd64(nm, hdr.sh_entsize),
 		};
 	}
 

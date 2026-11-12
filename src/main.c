@@ -53,21 +53,6 @@ void	init_nm(t_nm *nm, char **argv)
 	return ;
 }
 
-void	print_nm(t_nm *nm unused)
-{
-	AUTO_LOG;
-
-	LOG(GREEN "program_name " RESET H("%s"), nm->program_name);
-	LOG(MAGENTA "is_bonus" RESET " %s", BOOL_STR(nm->is_bonus));
-	LOG(MAGENTA "is_64bits" RESET " %s", BOOL_STR(nm->is_64bits));
-	LOG(BLUE "display_debugger_symbols" RESET " %s", BOOL_STR(nm->display_debugger_symbols));
-	LOG(BLUE "display_external_symbols" RESET " %s", BOOL_STR(nm->display_external_symbols));
-	LOG(BLUE "display_undefined_symbols" RESET " %s", BOOL_STR(nm->display_undefined_symbols));
-	LOG(YELLOW "revert_sorting" RESET " %s", BOOL_STR(nm->revert_sorting));
-	LOG(YELLOW "no_sorting" RESET " %s", BOOL_STR(nm->no_sorting));
-	return ;
-}
-
 int	g_exit_status = 0;
 
 int	main(int argc, char **argv)

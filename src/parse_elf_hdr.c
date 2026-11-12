@@ -25,8 +25,9 @@ bool	parse_bits(t_nm *nm)
 	nm->is_64bits = (file[EI_CLASS] == ELFCLASS64);
 
 	// Check and set endianness
-	if (file[EI_DATA] == ELFDATANONE || EI_DATA > 2)	goto error;
+	if (file[EI_DATA] == ELFDATANONE || file[EI_DATA] > ELFDATA2MSB)	goto error;
 	nm->is_big_endian = (file[EI_DATA] == ELFDATA2MSB);
+
 	LOG(PASS);
 	return false;
 
@@ -42,46 +43,6 @@ bool	parse_magic_number(t_nm *nm)
 
 	if (is_inbound(nm, 0, SELFMAG) && memcmp(nm->file, ELFMAG, SELFMAG) == 0) return (LOG(PASS), false);
 	else return (LOG(FAIL), true);
-}
-
-bool	fill_elf_header(t_nm *nm)
-{
-	AUTO_LOG;
-
-	if (nm->is_64bits)
-	{
-		if (!is_inbound(nm, 0, sizeof(Elf64_Ehdr)))	goto error;
-		Elf64_Ehdr	hdr;
-	 	memcpy (&hdr, nm->file, sizeof(Elf64_Ehdr));
-		nm->elf_hdr = (t_ehdr)
-		{
-			.type = hdr.e_type,
-			.shoff = hdr.e_shoff,
-			.shentsize = hdr.e_shentsize,
-			.shnum = hdr.e_shnum,
-			.shstrndx = hdr.e_shstrndx,
-		};
-	}
-	else
-	{
-		if (!is_inbound(nm, 0, sizeof(Elf32_Ehdr)))	goto error;
-		Elf32_Ehdr	hdr;
-	 	memcpy (&hdr, nm->file, sizeof(Elf32_Ehdr));
-		nm->elf_hdr = (t_ehdr)
-		{
-			.type = hdr.e_type,
-			.shoff = hdr.e_shoff,
-			.shentsize = hdr.e_shentsize,
-			.shnum = hdr.e_shnum,
-			.shstrndx = hdr.e_shstrndx,
-		};
-	}
-
-	LOG(PASS);
-	return false;
-	error:
-		LOG(FAIL);
-		return true;
 }
 
 bool	parse_elf(const char *path, t_nm *nm)

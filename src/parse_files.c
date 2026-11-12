@@ -123,4 +123,3 @@ void	free_file_name(t_nm *nm)
 	nm->filenames = NULL;
 	return ;
 }
-

@@ -28,7 +28,7 @@ CC		=	gcc
 
 UNAME_S	:=	$(shell uname -s)
 
-CFLAGS	=	-Wall -Wextra -Werror -DPRINT_LOGS -std=c23 -D_POSIX_C_SOURCE=200809L -Wextra -Werror -std=c23 -D_POSIX_C_SOURCE=200809L -lc
+CFLAGS	=	-Wall -Wextra -Werror -DPRINT_LOGS -std=c23 -D_POSIX_C_SOURCE=200809L -Wextra -Werror -std=c23
 
 # Enable logs
 CFLAGS += -D_DEFAULT_SOURCE

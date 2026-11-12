@@ -173,6 +173,7 @@ bool	parse_sht_symtab(t_nm *nm);
 
 // helper_functions.c
 bool		is_inbound(t_nm *nm, uint64_t offset, uint64_t size);
+bool		fill_elf_header(t_nm *nm);
 bool		get_shdr_header_at(t_nm *nm, uint64_t id);
 uint16_t	rd16(t_nm *nm, uint16_t bytes);
 uint32_t	rd32(t_nm *nm, uint32_t bytes);
