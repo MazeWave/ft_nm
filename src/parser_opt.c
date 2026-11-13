@@ -6,7 +6,7 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/27 14:22:16 by ldalmass          #+#    #+#             */
-/*   Updated: 2026/11/10 15:10:57 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/11/13 13:26:39 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	opts_parser(int argc, char **argv, t_nm *nm)
 	int	opt = 0;
 
 	LOG(BLUE "optind: %d, argc: %d" RESET, optind, argc);
-	while ((opt = getopt(argc, argv, "-h?vagurp")) != -1)
+	while ((opt = getopt(argc, argv, "-h?bvagurp")) != -1)
 	{
 		switch (opt)
 		{
