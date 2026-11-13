@@ -59,6 +59,8 @@ typedef struct s_file_name
 typedef struct s_ehdr	// ELF header
 {
 	uint16_t	type;
+	uint16_t	machine;
+	uint16_t	version;
 	uint64_t	shoff;
 	uint16_t	shentsize;
 	uint16_t	shnum;
@@ -86,26 +88,6 @@ typedef struct s_shdr	// Section header
 // 	uint8_t		other;
 // 	uint16_t	shndx;
 // }	t_sym;
-
-// typedef struct s_elf32_sym
-// {
-// 	uint32_t		st_name;
-// 	Elf32_Addr		st_value;
-// 	uint32_t		st_size;
-// 	unsigned char	st_info;
-// 	unsigned char	st_other;
-// 	uint16_t		st_shndx;
-// } t_elf32_sym;
-
-// typedef struct s_elf64_sym
-// {
-// 	uint32_t	 	st_name;
-// 	unsigned char	st_info;
-// 	unsigned char	st_other;
-// 	uint16_t		st_shndx;
-// 	Elf64_Addr		st_value;
-// 	uint64_t		st_size;
-// } t_elf64_sym;
 
 typedef struct s_nm
 {
@@ -144,7 +126,6 @@ extern int	g_exit_status;
 // main.c
 void	free_nm(t_nm *nm);
 void	init_nm(t_nm *nm, char **argv);
-void	print_nm(t_nm *nm);
 
 // parser_opt.c
 void	opts_parser(int argc, char **argv, t_nm *nm);
@@ -178,3 +159,11 @@ bool		get_shdr_header_at(t_nm *nm, uint64_t id);
 uint16_t	rd16(t_nm *nm, uint16_t bytes);
 uint32_t	rd32(t_nm *nm, uint32_t bytes);
 uint64_t	rd64(t_nm *nm, uint64_t bytes);
+const char	*get_sh_name(t_nm *nm);
+
+// printer.c
+void		print_nm(t_nm *nm);
+void		print_elf_hdr(t_nm *nm);
+void		print_sh_hdr(t_nm *nm);
+const char	*em_to_str(uint16_t machine);
+const char	*ev_to_str(uint32_t version);

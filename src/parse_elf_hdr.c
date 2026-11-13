@@ -56,5 +56,6 @@ bool	parse_elf(const char *path, t_nm *nm)
 	
 	if (fill_elf_header(nm))	return(true);
 	print_nm(nm);
+	print_elf_hdr(nm);
 	return (false);
 }

@@ -6,7 +6,7 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/28 17:27:06 by ldalmass          #+#    #+#             */
-/*   Updated: 2026/11/12 13:45:13 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/11/13 14:58:04 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,9 @@ bool	parse_sht_symtab(t_nm *nm)
 {
 	AUTO_LOG;
 
+	get_shdr_header_at(nm, 0);
+	print_sh_hdr(nm);
+	get_shdr_header_at(nm, 1);
 	goto error;	// TODO: implement sht symtab parsing
 
 	LOG(PASS);

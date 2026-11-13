@@ -23,6 +23,8 @@ bool	fill_elf_header(t_nm *nm)
 			.shentsize = rd16(nm, hdr.e_shentsize),
 			.shnum = rd16(nm, hdr.e_shnum),
 			.shstrndx = rd16(nm, hdr.e_shstrndx),
+			.machine = rd16(nm, hdr.e_machine),
+			.version = rd16(nm, hdr.e_version),
 		};
 	}
 	else
@@ -37,6 +39,8 @@ bool	fill_elf_header(t_nm *nm)
 			.shentsize = rd16(nm, hdr.e_shentsize),
 			.shnum = rd16(nm, hdr.e_shnum),
 			.shstrndx = rd16(nm, hdr.e_shstrndx),
+			.machine = rd16(nm, hdr.e_machine),
+			.version = rd16(nm, hdr.e_version),
 		};
 	}
 
@@ -94,6 +98,15 @@ bool	get_shdr_header_at(t_nm *nm, uint64_t id)
 	error:
 		LOG(FAIL);
 		return true;
+}
+
+const char *get_sh_name(t_nm *nm)
+{
+	AUTO_LOG;
+
+	if (!is_inbound(nm, nm->sh_hdr.offset + nm->sh_hdr.name, sizeof(nm->sh_hdr)))	return NULL;
+
+	return ((const char *)nm->sh_hdr.name + nm->sh_hdr.offset);
 }
 
 uint16_t	rd16(t_nm *nm, uint16_t bytes) { return nm->is_big_endian ? be16toh(bytes) : le16toh(bytes); }
