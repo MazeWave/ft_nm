@@ -16,6 +16,7 @@ NAME_B	=	ft_nm_bonus
 SRC		=	src/main.c \
 			src/log.c \
 			src/helper_functions.c \
+			src/printer.c \
 			src/parser_opt.c \
 			src/parse_files.c \
 			src/parse_elf_hdr.c \
