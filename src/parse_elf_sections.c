@@ -6,7 +6,7 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/28 17:27:06 by ldalmass          #+#    #+#             */
-/*   Updated: 2026/11/18 15:45:24 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/11/18 16:25:12 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,13 @@ bool	parse_sht_symtab(t_nm *nm)
 	for (uint64_t i = 0; i < nm->elf_hdr.shnum; i++)
 	{
 		LOG(H_BLUE("%u/%u"), i, nm->elf_hdr.shnum - 1);
-		if (get_shdr_header_at(nm, i))									goto error;
-		if (nm->sh_hdr.type != SHT_SYMTAB)								continue;
-		if (!is_inbound(nm, nm->sh_hdr.offset, nm->sh_hdr.size))		goto error;
-		if (nm->sh_hdr.link >= nm->elf_hdr.shnum)						goto error;
-		if (nm->sh_hdr.entsize % nm->sh_hdr.size == 0)					goto error;
-		if ( nm->is_64bits && nm->sh_hdr.entsize == sizeof(Elf64_Sym))	goto error;
-		if (!nm->is_64bits && nm->sh_hdr.entsize == sizeof(Elf32_Sym))	goto error;
+		if (get_shdr_header_at(nm, i))												goto error;
+		if (nm->sh_hdr.type != SHT_SYMTAB)											continue;
+		if (!is_inbound(nm, nm->sh_hdr.offset, nm->sh_hdr.size))					goto error;
+		if (nm->sh_hdr.link >= nm->elf_hdr.shnum)									goto error;
+		if (nm->sh_hdr.entsize != 0 && nm->sh_hdr.size % nm->sh_hdr.entsize != 0)	goto error;
+		if ( nm->is_64bits && nm->sh_hdr.entsize != sizeof(Elf64_Sym))				goto error;
+		if (!nm->is_64bits && nm->sh_hdr.entsize != sizeof(Elf32_Sym))				goto error;
 
 		// We found the symtab, lets save it and stop there
 		nm->sym_hdr = nm->sh_hdr;
