@@ -6,7 +6,7 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/28 17:27:06 by ldalmass          #+#    #+#             */
-/*   Updated: 2026/11/18 14:09:17 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/11/18 15:21:52 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ bool	parse_section_header(t_nm *nm)
 bool	parse_sht_symtab(t_nm *nm)
 {
 	AUTO_LOG;
-	if (get_shdr_header_at(nm, nm->elf_hdr.shstrndx))	goto error;
 	
 	for (uint64_t i = 0; i < nm->elf_hdr.shnum; i++)
 	{
@@ -46,14 +45,15 @@ bool	parse_sht_symtab(t_nm *nm)
 		if (!is_inbound(nm, nm->sh_hdr.nameoff, nm->sh_hdr.size))	goto error;
 		if (nm->sh_hdr.link >= nm->elf_hdr.shnum)					goto error;
 
-		// We save our symbol header
+		// We found the symtab, lets save it
 		nm->sym_hdr = nm->sh_hdr;
 		print_sh_hdr(nm);
 		LOG(PASS);
 		return false;
 	}
-		dprintf(STDERR_FILENO, YELLOW "%s: %s: no symbols\n" RESET, nm->program_name, nm->current_opened_filename);
-		return false;
+
+	dprintf(STDERR_FILENO, YELLOW "%s: %s: no symbols\n" RESET, nm->program_name, nm->current_opened_filename);
+	return false;
 
 	error:
 		LOG(FAIL);

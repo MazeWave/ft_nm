@@ -165,7 +165,6 @@ void	print_sh_hdr(t_nm *nm)
 	AUTO_LOG;
 
 	char	flags_buf[256] = {0};
-	// LOG(H_BLUE("name") " 0x%x : " H("%s"), nm->sh_hdr.nameoff, nm->sh_hdr.namestr);
 	LOG(H_BLUE("type") " %s", sht_to_str(nm->sh_hdr.type));
 	LOG(H_BLUE("flags") " %s", shf_to_str(nm->sh_hdr.flags, flags_buf, sizeof(flags_buf)));
 	LOG(H_BLUE("offset") " 0x%x", nm->sh_hdr.offset);

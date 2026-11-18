@@ -66,7 +66,6 @@ bool	get_shdr_header_at(t_nm *nm, uint64_t id)
 		memcpy(&hdr, (uint8_t *)nm->file + offset, sizeof(hdr));
 		nm->sh_hdr = (t_shdr)
 		{
-			// .namestr = NULL,
 			.nameoff = rd64(nm, hdr.sh_name),
 			.type = rd64(nm, hdr.sh_type),
 			.flags = rd64(nm, hdr.sh_flags),
@@ -84,7 +83,6 @@ bool	get_shdr_header_at(t_nm *nm, uint64_t id)
 		memcpy(&hdr, (uint8_t *)nm->file + offset, sizeof(hdr));
 		nm->sh_hdr = (t_shdr)
 		{
-			// .namestr = NULL,
 			.nameoff = rd64(nm, hdr.sh_name),
 			.type = rd64(nm, hdr.sh_type),
 			.flags = rd64(nm, hdr.sh_flags),
@@ -95,7 +93,6 @@ bool	get_shdr_header_at(t_nm *nm, uint64_t id)
 			.entsize = rd64(nm, hdr.sh_entsize),
 		};
 	}
-	// nm->sh_hdr.namestr = (char *)nm->file + rd64(nm, ) + nm->sh_hdr.nameoff;;
 
 	LOG(PASS);
 	return false;

@@ -69,7 +69,6 @@ typedef struct s_ehdr	// ELF header
 
 typedef struct s_shdr	// Section header
 {
-	// char		*namestr;
 	uint64_t	nameoff;
 	uint64_t	type;
 	uint64_t	flags;
