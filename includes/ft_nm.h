@@ -69,13 +69,13 @@ typedef struct s_ehdr	// ELF header
 
 typedef struct s_shdr	// Section header
 {
-	uint64_t	nameoff;
-	uint64_t	type;
+	uint32_t	nameoff;
+	uint32_t	type;
 	uint64_t	flags;
-	uint64_t	offset;
+	uint32_t	offset;
 	uint64_t	size;
-	uint64_t	link;
-	uint64_t	info;
+	uint32_t	link;
+	uint32_t	info;
 	uint64_t	entsize;
 }	t_shdr;
 

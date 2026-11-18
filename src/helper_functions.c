@@ -66,13 +66,13 @@ bool	get_shdr_header_at(t_nm *nm, uint64_t id)
 		memcpy(&hdr, (uint8_t *)nm->file + offset, sizeof(hdr));
 		nm->sh_hdr = (t_shdr)
 		{
-			.nameoff = rd64(nm, hdr.sh_name),
-			.type = rd64(nm, hdr.sh_type),
+			.nameoff = rd32(nm, hdr.sh_name),
+			.type = rd32(nm, hdr.sh_type),
 			.flags = rd64(nm, hdr.sh_flags),
-			.offset = rd64(nm, hdr.sh_offset),
+			.offset = rd32(nm, hdr.sh_offset),
 			.size = rd64(nm, hdr.sh_size),
-			.link = rd64(nm, hdr.sh_link),
-			.info = rd64(nm, hdr.sh_info),
+			.link = rd32(nm, hdr.sh_link),
+			.info = rd32(nm, hdr.sh_info),
 			.entsize = rd64(nm, hdr.sh_entsize),
 		};
 	}
@@ -83,14 +83,14 @@ bool	get_shdr_header_at(t_nm *nm, uint64_t id)
 		memcpy(&hdr, (uint8_t *)nm->file + offset, sizeof(hdr));
 		nm->sh_hdr = (t_shdr)
 		{
-			.nameoff = rd64(nm, hdr.sh_name),
-			.type = rd64(nm, hdr.sh_type),
-			.flags = rd64(nm, hdr.sh_flags),
-			.offset = rd64(nm, hdr.sh_offset),
-			.size = rd64(nm, hdr.sh_size),
-			.link = rd64(nm, hdr.sh_link),
-			.info = rd64(nm, hdr.sh_info),
-			.entsize = rd64(nm, hdr.sh_entsize),
+			.nameoff = rd32(nm, hdr.sh_name),
+			.type = rd32(nm, hdr.sh_type),
+			.flags = rd32(nm, hdr.sh_flags),
+			.offset = rd32(nm, hdr.sh_offset),
+			.size = rd32(nm, hdr.sh_size),
+			.link = rd32(nm, hdr.sh_link),
+			.info = rd32(nm, hdr.sh_info),
+			.entsize = rd32(nm, hdr.sh_entsize),
 		};
 	}
 
