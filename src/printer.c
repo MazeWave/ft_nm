@@ -150,10 +150,10 @@ void	print_elf_hdr(t_nm *nm)
 	AUTO_LOG;
 
 	LOG(H_BLUE("type") " %s", et_to_str(nm->elf_hdr.type));
-	LOG(H_BLUE("shoff") " %x", nm->elf_hdr.shoff);
+	LOG(H_BLUE("shoff") " 0x%x", nm->elf_hdr.shoff);
 	LOG(H_BLUE("shentsize") " %u", nm->elf_hdr.shentsize);
 	LOG(H_BLUE("shnum") " %u", nm->elf_hdr.shnum);
-	LOG(H_BLUE("shstrndx") " %x", nm->elf_hdr.shstrndx);
+	LOG(H_BLUE("shstrndx") " 0x%x", nm->elf_hdr.shstrndx);
 	LOG(H_BLUE("machine") " %s", em_to_str(nm->elf_hdr.machine));
 	LOG(H_BLUE("version") " %s", ev_to_str(nm->elf_hdr.version));
 
@@ -164,14 +164,14 @@ void	print_sh_hdr(t_nm *nm)
 {
 	AUTO_LOG;
 
-	// LOG(H_BLUE("name") " %x : %s", nm->sh_hdr.name, get_sh_name(nm));
+	char	flags_buf[256] = {0};
+	// LOG(H_BLUE("name") " 0x%x : " H("%s"), nm->sh_hdr.nameoff, nm->sh_hdr.namestr);
 	LOG(H_BLUE("type") " %s", sht_to_str(nm->sh_hdr.type));
-	char	flags_buf[256];
 	LOG(H_BLUE("flags") " %s", shf_to_str(nm->sh_hdr.flags, flags_buf, sizeof(flags_buf)));
-	LOG(H_BLUE("offset") " %x", nm->sh_hdr.offset);
+	LOG(H_BLUE("offset") " 0x%x", nm->sh_hdr.offset);
 	LOG(H_BLUE("size") " %u", nm->sh_hdr.size);
-	LOG(H_BLUE("link") " %x", nm->sh_hdr.link);
-	LOG(H_BLUE("info") " %x", nm->sh_hdr.info);
+	LOG(H_BLUE("link") " 0x%x", nm->sh_hdr.link);
+	LOG(H_BLUE("info") " 0x%x", nm->sh_hdr.info);
 	LOG(H_BLUE("entsize") " %u", nm->sh_hdr.entsize);
 	
 	return ;

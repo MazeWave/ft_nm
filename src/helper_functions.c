@@ -57,6 +57,7 @@ bool	get_shdr_header_at(t_nm *nm, uint64_t id)
 
 	if (id >= nm->elf_hdr.shnum)	goto error;
 	uint64_t	offset = id * nm->elf_hdr.shentsize + nm->elf_hdr.shoff;
+	//                   id * size of a section     + offset start of the section header
 
 	if (nm->is_64bits)
 	{
@@ -65,7 +66,8 @@ bool	get_shdr_header_at(t_nm *nm, uint64_t id)
 		memcpy(&hdr, (uint8_t *)nm->file + offset, sizeof(hdr));
 		nm->sh_hdr = (t_shdr)
 		{
-			.name = rd64(nm, hdr.sh_name),
+			// .namestr = NULL,
+			.nameoff = rd64(nm, hdr.sh_name),
 			.type = rd64(nm, hdr.sh_type),
 			.flags = rd64(nm, hdr.sh_flags),
 			.offset = rd64(nm, hdr.sh_offset),
@@ -82,7 +84,8 @@ bool	get_shdr_header_at(t_nm *nm, uint64_t id)
 		memcpy(&hdr, (uint8_t *)nm->file + offset, sizeof(hdr));
 		nm->sh_hdr = (t_shdr)
 		{
-			.name = rd64(nm, hdr.sh_name),
+			// .namestr = NULL,
+			.nameoff = rd64(nm, hdr.sh_name),
 			.type = rd64(nm, hdr.sh_type),
 			.flags = rd64(nm, hdr.sh_flags),
 			.offset = rd64(nm, hdr.sh_offset),
@@ -92,21 +95,13 @@ bool	get_shdr_header_at(t_nm *nm, uint64_t id)
 			.entsize = rd64(nm, hdr.sh_entsize),
 		};
 	}
+	// nm->sh_hdr.namestr = (char *)nm->file + rd64(nm, ) + nm->sh_hdr.nameoff;;
 
 	LOG(PASS);
 	return false;
 	error:
 		LOG(FAIL);
 		return true;
-}
-
-const char *get_sh_name(t_nm *nm)
-{
-	AUTO_LOG;
-
-	if (!is_inbound(nm, nm->sh_hdr.offset + nm->sh_hdr.name, sizeof(nm->sh_hdr)))	return NULL;
-
-	return ((const char *)nm->sh_hdr.name + nm->sh_hdr.offset);
 }
 
 uint16_t	rd16(t_nm *nm, uint16_t bytes) { return nm->is_big_endian ? be16toh(bytes) : le16toh(bytes); }

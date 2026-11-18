@@ -69,7 +69,8 @@ typedef struct s_ehdr	// ELF header
 
 typedef struct s_shdr	// Section header
 {
-	uint64_t	name;
+	// char		*namestr;
+	uint64_t	nameoff;
 	uint64_t	type;
 	uint64_t	flags;
 	uint64_t	offset;
@@ -94,13 +95,14 @@ typedef struct s_nm
 	// Structs
 	struct s_file_name	*filenames;
 
-	// Opened file in memory (whole file)
+	// Currently opened file maped
 	void			*file;
 	char			*current_opened_filename;
 	struct stat		st;
 	struct s_ehdr	elf_hdr;
 	struct s_shdr	sh_hdr;
 	struct s_sym	*elf_symbols;
+	struct s_shdr	sym_hdr;
 
 	// Flags
 	bool	is_bonus;
@@ -159,7 +161,6 @@ bool		get_shdr_header_at(t_nm *nm, uint64_t id);
 uint16_t	rd16(t_nm *nm, uint16_t bytes);
 uint32_t	rd32(t_nm *nm, uint32_t bytes);
 uint64_t	rd64(t_nm *nm, uint64_t bytes);
-const char	*get_sh_name(t_nm *nm);
 
 // printer.c
 void		print_nm(t_nm *nm);
