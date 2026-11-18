@@ -71,15 +71,19 @@ int	main(int argc, char **argv)
 	{
 		LOG("Running on " H("%s") " " H("%d/%d") RESET, temp->name, counter, nm->files_count);
 		nm->current_opened_filename = temp->name;
-		if (parse_elf(temp->name, nm))	g_exit_status = 1;
-		if (parse_section_header(nm))	g_exit_status = 1;
-		if (parse_sht_symtab(nm))		g_exit_status = 1;
+		if (parse_elf(temp->name, nm))	goto error;
+		if (parse_section_header(nm))	goto error;
+		if (parse_sht_symtab(nm))		goto error;
 		// parse_symbols(nm);
+		goto next;
 
-		close_file(nm);
-		temp = temp->next;
-		counter++;
-		nm->current_opened_filename = NULL;
+		error:
+			g_exit_status = 1;
+		next:
+			close_file(nm);
+			temp = temp->next;
+			counter++;
+			nm->current_opened_filename = NULL;
 	}
 
 	free_nm(nm);
