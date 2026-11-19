@@ -81,8 +81,8 @@ typedef struct s_shdr	// Section header
 
 typedef struct s_sym
 {
+	const char	*namestr;
 	uint32_t	nameoff;
-	// const char	*namestr;
 	uint64_t	value;
 	uint64_t	size;
 	uint16_t	shndx;
@@ -169,6 +169,7 @@ uint64_t	rd64(t_nm *nm, uint64_t bytes);
 void		print_nm(t_nm *nm);
 void		print_elf_hdr(t_nm *nm);
 void		print_section_header_entry(t_shdr sh_hdr);
+void		print_symbol_table(t_sym *sym);
 const char	*em_to_str(uint16_t machine);
 const char	*ev_to_str(uint32_t version);
 const char	*stt_to_str(uint8_t info);

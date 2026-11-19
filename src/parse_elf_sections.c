@@ -6,7 +6,7 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/28 17:27:06 by ldalmass          #+#    #+#             */
-/*   Updated: 2026/11/19 17:49:24 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/11/19 18:00:31 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,11 @@ bool	parse_section_header_entries(t_nm *nm)
 		if (!is_inbound(nm, nm->sh_hdr.offset, nm->sh_hdr.size))	goto error;
 		nm->str_tab = nm->sh_hdr;
 		print_section_header_entry(nm->str_tab);
+
+		get_sym_entry_at(nm, 0);
+		print_symbol_table(&nm->symbol);
+		get_sym_entry_at(nm, 2);
+		print_symbol_table(&nm->symbol);
 
 		LOG(PASS);
 		return false;

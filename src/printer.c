@@ -203,11 +203,12 @@ void	print_section_header_entry(t_shdr sh_hdr)
 	return ;
 }
 
-void	print_sym(t_sym *sym)
+void	print_symbol_table(t_sym *sym)
 {
 	AUTO_LOG;
 
 	LOG(H_BLUE("nameoff") " 0x%x", sym->nameoff);
+	LOG(H_BLUE("namestr") " %s", sym->namestr);
 	LOG(H_BLUE("value") " 0x%x", sym->value);
 	LOG(H_BLUE("size") " 0x%x", sym->size);
 	LOG(H_BLUE("info") " %s", stt_to_str(sym->info));
