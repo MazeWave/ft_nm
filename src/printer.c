@@ -187,7 +187,7 @@ void	print_elf_hdr(t_nm *nm)
 	return ;
 }
 
-void	print_sh_hdr(t_shdr sh_hdr)
+void	print_section_header_entry(t_shdr sh_hdr)
 {
 	AUTO_LOG;
 

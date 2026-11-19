@@ -6,7 +6,7 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/28 17:27:06 by ldalmass          #+#    #+#             */
-/*   Updated: 2026/11/19 17:37:13 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/11/19 17:49:24 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ bool	parse_section_header(t_nm *nm)
 		return true;
 }
 
-bool	parse_sh_symtab(t_nm *nm)
+bool	parse_section_header_entries(t_nm *nm)
 {
 	AUTO_LOG;
 	
@@ -48,16 +48,16 @@ bool	parse_sh_symtab(t_nm *nm)
 		if ( nm->is_64bits && nm->sh_hdr.entsize != sizeof(Elf64_Sym))				goto error;
 		if (!nm->is_64bits && nm->sh_hdr.entsize != sizeof(Elf32_Sym))				goto error;
 
-		// We found the .symtab, lets save it and stop there
+		// We found .symtab, let's save it and stop there
 		nm->sym_tab = nm->sh_hdr;
-		print_sh_hdr(nm->sym_tab);
+		print_section_header_entry(nm->sym_tab);
 
-		// Now let's get the .strtab and save it
+		// Now let's get .strtab and save it
 		get_shdr_header_at(nm, nm->sh_hdr.link);
 		if (nm->sh_hdr.type != SHT_STRTAB)							goto error;
 		if (!is_inbound(nm, nm->sh_hdr.offset, nm->sh_hdr.size))	goto error;
 		nm->str_tab = nm->sh_hdr;
-		print_sh_hdr(nm->str_tab);
+		print_section_header_entry(nm->str_tab);
 
 		LOG(PASS);
 		return false;

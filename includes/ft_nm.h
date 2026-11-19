@@ -153,7 +153,7 @@ bool	parse_bits(t_nm *nm);
 
 // parse_elf_sections.c
 bool	parse_section_header(t_nm *nm);
-bool	parse_sh_symtab(t_nm *nm);
+bool	parse_section_header_entries(t_nm *nm);
 
 // helper_functions.c
 bool		is_inbound(t_nm *nm, uint64_t offset, uint64_t size);
@@ -168,7 +168,7 @@ uint64_t	rd64(t_nm *nm, uint64_t bytes);
 // printer.c
 void		print_nm(t_nm *nm);
 void		print_elf_hdr(t_nm *nm);
-void		print_sh_hdr(t_shdr sh_hdr);
+void		print_section_header_entry(t_shdr sh_hdr);
 const char	*em_to_str(uint16_t machine);
 const char	*ev_to_str(uint32_t version);
 const char	*stt_to_str(uint8_t info);

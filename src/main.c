@@ -73,7 +73,7 @@ int	main(int argc, char **argv)
 		nm->current_opened_filename = temp->name;
 		if (parse_elf(temp->name, nm))	goto error;
 		if (parse_section_header(nm))	goto error;
-		if (parse_sh_symtab(nm))		goto error;
+		if (parse_section_header_entries(nm))		goto error;
 		// parse_symbols(nm);
 		goto next;
 
