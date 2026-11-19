@@ -79,15 +79,15 @@ typedef struct s_shdr	// Section header
 	uint64_t	entsize;
 }	t_shdr;
 
-// typedef struct s_sym
-// {
-// 	char		*name;
-// 	uint64_t	value;
-// 	uint8_t		info;
-// 	uint64_t	size;
-// 	uint8_t		other;
-// 	uint16_t	shndx;
-// }	t_sym;
+typedef struct s_sym
+{
+	const char	*name;
+	uint64_t	value;
+	uint64_t	size;
+	uint16_t	shndx;
+	uint8_t		info;
+	uint8_t		other;
+}	t_sym;
 
 typedef struct s_nm
 {
@@ -167,3 +167,5 @@ void		print_elf_hdr(t_nm *nm);
 void		print_sh_hdr(t_nm *nm);
 const char	*em_to_str(uint16_t machine);
 const char	*ev_to_str(uint32_t version);
+const char	*stt_to_str(uint8_t info);
+const char	*stv_to_str(uint8_t other);

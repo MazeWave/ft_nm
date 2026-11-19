@@ -145,13 +145,40 @@ const char	*et_to_str(uint16_t type)
 	}
 }
 
+const char	*stt_to_str(uint8_t info)
+{
+	switch (info)
+	{
+		CASE_STR(STT_OBJECT);
+		CASE_STR(STT_FUNC);
+		CASE_STR(STT_SECTION);
+		CASE_STR(STT_FILE);
+		CASE_STR(STT_LOPROC);
+		CASE_STR(STT_HIPROC);
+		default:
+			return "STT_NOTYPE";
+	}
+}
+
+const char	*stv_to_str(uint8_t other)
+{
+	switch (other)
+	{
+		CASE_STR(STV_INTERNAL);
+		CASE_STR(STV_HIDDEN);
+		CASE_STR(STV_PROTECTED);
+		default:
+			return "STV_DEFAULT";
+	}
+}
+
 void	print_elf_hdr(t_nm *nm)
 {
 	AUTO_LOG;
 
 	LOG(H_BLUE("type") " %s", et_to_str(nm->elf_hdr.type));
 	LOG(H_BLUE("shoff") " 0x%x", nm->elf_hdr.shoff);
-	LOG(H_BLUE("shentsize") " %u", nm->elf_hdr.shentsize);
+	LOG(H_BLUE("shentsize") " %u bytes", nm->elf_hdr.shentsize);
 	LOG(H_BLUE("shnum") " %u", nm->elf_hdr.shnum);
 	LOG(H_BLUE("shstrndx") " 0x%x", nm->elf_hdr.shstrndx);
 	LOG(H_BLUE("machine") " %s", em_to_str(nm->elf_hdr.machine));
@@ -168,10 +195,23 @@ void	print_sh_hdr(t_nm *nm)
 	LOG(H_BLUE("type") " %s", sht_to_str(nm->sh_hdr.type));
 	LOG(H_BLUE("flags") " %s", shf_to_str(nm->sh_hdr.flags, flags_buf, sizeof(flags_buf)));
 	LOG(H_BLUE("offset") " 0x%x", nm->sh_hdr.offset);
-	LOG(H_BLUE("size") " %u", nm->sh_hdr.size);
+	LOG(H_BLUE("size") " %u bytes", nm->sh_hdr.size);
 	LOG(H_BLUE("link") " 0x%x", nm->sh_hdr.link);
 	LOG(H_BLUE("info") " 0x%x", nm->sh_hdr.info);
-	LOG(H_BLUE("entsize") " %u", nm->sh_hdr.entsize);
+	LOG(H_BLUE("entsize") " %u bytes", nm->sh_hdr.entsize);
 	
 	return ;
+}
+
+void	print_sym(t_sym *sym)
+{
+	AUTO_LOG;
+
+	LOG(H_BLUE("name") " %s", sym->name);
+	LOG(H_BLUE("value") " 0x%x", sym->value);
+	LOG(H_BLUE("size") " 0x%x", sym->size);
+	LOG(H_BLUE("info") " %s", stt_to_str(sym->info));
+	LOG(H_BLUE("other") " %s", stv_to_str(sym->other));
+
+	return;
 }
