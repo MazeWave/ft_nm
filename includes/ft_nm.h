@@ -81,7 +81,8 @@ typedef struct s_shdr	// Section header
 
 typedef struct s_sym
 {
-	const char	*name;
+	uint32_t	nameoff;
+	// const char	*namestr;
 	uint64_t	value;
 	uint64_t	size;
 	uint16_t	shndx;
@@ -100,8 +101,9 @@ typedef struct s_nm
 	struct stat		st;
 	struct s_ehdr	elf_hdr;
 	struct s_shdr	sh_hdr;
-	struct s_sym	*elf_symbols;
-	struct s_shdr	sym_hdr;
+	struct s_sym	symbol;
+	struct s_shdr	sym_tab;
+	struct s_shdr	str_tab;
 
 	// Flags
 	bool	is_bonus;
@@ -151,12 +153,14 @@ bool	parse_bits(t_nm *nm);
 
 // parse_elf_sections.c
 bool	parse_section_header(t_nm *nm);
-bool	parse_sht_symtab(t_nm *nm);
+bool	parse_sh_symtab(t_nm *nm);
 
 // helper_functions.c
 bool		is_inbound(t_nm *nm, uint64_t offset, uint64_t size);
 bool		fill_elf_header(t_nm *nm);
 bool		get_shdr_header_at(t_nm *nm, uint64_t id);
+bool		get_sym_entry_at(t_nm *nm, uint64_t id);
+const char	*get_sym_name(t_nm *nm, uint32_t nameoff);
 uint16_t	rd16(t_nm *nm, uint16_t bytes);
 uint32_t	rd32(t_nm *nm, uint32_t bytes);
 uint64_t	rd64(t_nm *nm, uint64_t bytes);
@@ -164,7 +168,7 @@ uint64_t	rd64(t_nm *nm, uint64_t bytes);
 // printer.c
 void		print_nm(t_nm *nm);
 void		print_elf_hdr(t_nm *nm);
-void		print_sh_hdr(t_nm *nm);
+void		print_sh_hdr(t_shdr sh_hdr);
 const char	*em_to_str(uint16_t machine);
 const char	*ev_to_str(uint32_t version);
 const char	*stt_to_str(uint8_t info);

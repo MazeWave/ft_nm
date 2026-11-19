@@ -101,6 +101,65 @@ bool	get_shdr_header_at(t_nm *nm, uint64_t id)
 		return true;
 }
 
+const char	*get_sym_name(t_nm *nm, uint32_t nameoff)
+{
+	AUTO_LOG;
+
+    const char *name;
+
+    if (nameoff >= nm->sh_hdr.size) return (NULL);
+    name = (const char *)nm->file + nm->sh_hdr.offset + nameoff;
+    if (!memchr(name, '\0', nm->sh_hdr.size - nameoff)) return (NULL);
+    LOG(MAGENTA "Read symbol name: %s" RESET, name);
+    return (name);
+}
+
+bool	get_sym_entry_at(t_nm *nm, uint64_t id)
+{
+	AUTO_LOG;
+
+	if (id >= nm->elf_hdr.shnum)	goto error;
+	uint64_t	offset = id * nm->sym_tab.entsize + nm->sym_tab.offset;
+	//                   id * start of .symtab    + size of one ElfXX_Sym
+
+	if (nm->is_64bits)
+	{
+		if (!is_inbound(nm, offset, sizeof(Elf64_Sym)))	goto error;
+		Elf64_Sym	sym;
+		memcpy(&sym, (uint8_t *)nm->file + offset, sizeof(sym));
+		nm->symbol = (t_sym)
+		{
+			.value = rd64(nm, sym.st_value),
+			.nameoff = rd32(nm, sym.st_name),
+			.size = rd64(nm, sym.st_size),
+			.shndx = rd16(nm, sym.st_shndx),
+			.info = sym.st_info,
+			.other = sym.st_other,
+		};
+	}
+	else
+	{
+		if (!is_inbound(nm, offset, sizeof(Elf32_Sym)))	goto error;
+		Elf32_Sym	sym;
+		memcpy(&sym, (uint8_t *)nm->file + offset, sizeof(sym));
+		nm->symbol = (t_sym)
+		{
+			.value = rd32(nm, sym.st_value),
+			.nameoff = rd32(nm, sym.st_name),
+			.size = rd32(nm, sym.st_size),
+			.shndx = rd16(nm, sym.st_shndx),
+			.info = sym.st_info,
+			.other = sym.st_other,
+		};
+	}
+
+	LOG(PASS);
+	return false;
+	error:
+		LOG(FAIL);
+		return true;
+}
+
 uint16_t	rd16(t_nm *nm, uint16_t bytes) { return nm->is_big_endian ? be16toh(bytes) : le16toh(bytes); }
 uint32_t	rd32(t_nm *nm, uint32_t bytes) { return nm->is_big_endian ? be32toh(bytes) : le32toh(bytes); }
 uint64_t	rd64(t_nm *nm, uint64_t bytes) { return nm->is_big_endian ? be64toh(bytes) : le64toh(bytes); }
