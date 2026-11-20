@@ -107,9 +107,9 @@ const char	*get_sym_name(t_nm *nm, uint32_t nameoff)
 
     const char *name;
 
-    if (nameoff >= nm->sh_hdr.size) return (NULL);
-    name = (const char *)nm->file + nm->sh_hdr.offset + nameoff;
-    if (!memchr(name, '\0', nm->sh_hdr.size - nameoff)) return (NULL);
+    if (nameoff >= nm->str_tab.size) return (NULL);
+    name = (const char *)nm->file + nm->str_tab.offset + nameoff;
+    if (!memchr(name, '\0', nm->str_tab.size - nameoff)) return (NULL);
     LOG(MAGENTA "Read symbol name: %s" RESET, name);
     return (name);
 }
@@ -118,7 +118,7 @@ bool	get_sym_entry_at(t_nm *nm, uint64_t id)
 {
 	AUTO_LOG;
 
-	if (id >= nm->elf_hdr.shnum)	goto error;
+	if (id >= nm->sym_tab.size / nm->sym_tab.entsize)	goto error;
 	uint64_t	offset = id * nm->sym_tab.entsize + nm->sym_tab.offset;
 	//                   id * start of .symtab    + size of one ElfXX_Sym
 

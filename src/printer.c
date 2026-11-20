@@ -147,6 +147,7 @@ const char	*et_to_str(uint16_t type)
 
 const char	*stt_to_str(uint8_t info)
 {
+	info = ELF64_ST_BIND(info);
 	switch (info)
 	{
 		CASE_STR(STT_OBJECT);
@@ -155,6 +156,9 @@ const char	*stt_to_str(uint8_t info)
 		CASE_STR(STT_FILE);
 		CASE_STR(STT_LOPROC);
 		CASE_STR(STT_HIPROC);
+		CASE_STR(STT_COMMON);
+		CASE_STR(STT_TLS);
+		CASE_STR(STT_GNU_IFUNC);
 		default:
 			return "STT_NOTYPE";
 	}
@@ -162,6 +166,7 @@ const char	*stt_to_str(uint8_t info)
 
 const char	*stv_to_str(uint8_t other)
 {
+	other = ELF64_ST_VISIBILITY(other);
 	switch (other)
 	{
 		CASE_STR(STV_INTERNAL);

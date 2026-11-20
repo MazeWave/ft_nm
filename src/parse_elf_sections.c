@@ -6,7 +6,7 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/28 17:27:06 by ldalmass          #+#    #+#             */
-/*   Updated: 2026/11/19 18:00:31 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/11/20 12:53:13 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ bool	parse_section_header_entries(t_nm *nm)
 		print_section_header_entry(nm->sym_tab);
 
 		// Now let's get .strtab and save it
-		get_shdr_header_at(nm, nm->sh_hdr.link);
+		if (get_shdr_header_at(nm, nm->sh_hdr.link))				goto error;
 		if (nm->sh_hdr.type != SHT_STRTAB)							goto error;
 		if (!is_inbound(nm, nm->sh_hdr.offset, nm->sh_hdr.size))	goto error;
 		nm->str_tab = nm->sh_hdr;
