@@ -147,7 +147,7 @@ const char	*et_to_str(uint16_t type)
 
 const char	*stt_to_str(uint8_t info)
 {
-	info = ELF64_ST_BIND(info);
+	info = ELF64_ST_TYPE(info);
 	switch (info)
 	{
 		CASE_STR(STT_OBJECT);

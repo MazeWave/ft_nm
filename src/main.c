@@ -50,6 +50,7 @@ void	init_nm(t_nm *nm, char **argv)
 	nm->display_undefined_symbols = false;
 	nm->revert_sorting = false;
 	nm->no_sorting = false;
+	nm->has_symtab = false;
 	return ;
 }
 
@@ -71,16 +72,23 @@ int	main(int argc, char **argv)
 	{
 		LOG("Running on " H("%s") " " H("%d/%d") RESET, temp->name, counter, nm->files_count);
 		nm->current_opened_filename = temp->name;
-		if (parse_elf(temp->name, nm))	goto error;
-		if (parse_section_header(nm))	goto error;
-		if (parse_section_header_entries(nm))		goto error;
-		// parse_symbols(nm);
+		if (parse_elf(temp->name, nm))			goto error;
+		if (parse_section_header(nm))			goto error;
+		if (parse_section_header_entries(nm))	goto error;
+		if (!nm->has_symtab)						goto next;	// Checks if the file is stripped
+		if (parse_symbols(nm))					goto error;
 		goto next;
 
 		error:
 			g_exit_status = 1;
 		next:
 			close_file(nm);
+			nm->elf_hdr =		(t_ehdr){0};
+			nm->sym_tab =		(t_shdr){0};
+			nm->str_tab =		(t_shdr){0};
+			nm->sh_hdr =		(t_shdr){0};
+			nm->symbol =		(t_sym){0};
+			nm->has_symtab = 	false;
 			temp = temp->next;
 			counter++;
 			nm->current_opened_filename = NULL;

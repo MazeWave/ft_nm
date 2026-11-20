@@ -6,7 +6,7 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/28 17:27:06 by ldalmass          #+#    #+#             */
-/*   Updated: 2026/11/20 12:53:13 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/11/20 15:43:41 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,8 @@ bool	parse_section_header_entries(t_nm *nm)
 		nm->str_tab = nm->sh_hdr;
 		print_section_header_entry(nm->str_tab);
 
-		get_sym_entry_at(nm, 0);
-		print_symbol_table(&nm->symbol);
-		get_sym_entry_at(nm, 2);
-		print_symbol_table(&nm->symbol);
-
 		LOG(PASS);
+		nm->has_symtab = true;
 		return false;
 	}
 

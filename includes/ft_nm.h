@@ -6,7 +6,7 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 17:10:35 by ldalmass          #+#    #+#             */
-/*   Updated: 2026/08/27 14:2929:0505 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/11/20 15:50:26 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ typedef struct s_nm
 	struct s_sym	symbol;
 	struct s_shdr	sym_tab;
 	struct s_shdr	str_tab;
+	bool			has_symtab;
 
 	// Flags
 	bool	is_bonus;
@@ -174,3 +175,7 @@ const char	*em_to_str(uint16_t machine);
 const char	*ev_to_str(uint32_t version);
 const char	*stt_to_str(uint8_t info);
 const char	*stv_to_str(uint8_t other);
+
+// parse_symbols.c
+bool	parse_symbols(t_nm *nm);
+char	get_letter(t_nm *nm, t_sym *s);
