@@ -6,7 +6,7 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 17:10:35 by ldalmass          #+#    #+#             */
-/*   Updated: 2026/11/20 19:06:44 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/11/23 14:01:50 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,6 +174,8 @@ void		print_nm(t_nm *nm);
 void		print_elf_hdr(t_nm *nm);
 void		print_section_header_entry(t_shdr sh_hdr);
 void		print_symbol_table(t_sym *sym);
+const char	*sht_to_str(uint64_t type);
+const char	*shf_to_str(uint64_t flags, char *buf, size_t size);
 const char	*em_to_str(uint16_t machine);
 const char	*ev_to_str(uint32_t version);
 const char	*stt_to_str(uint8_t info);

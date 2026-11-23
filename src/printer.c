@@ -16,7 +16,7 @@ void	print_nm(t_nm *nm unused)
 }
 
 #define CASE_STR(x) case x: return #x
-static const char	*sht_to_str(uint64_t type)
+const char	*sht_to_str(uint64_t type)
 {
 	switch (type)
 	{
@@ -49,7 +49,7 @@ static const char	*sht_to_str(uint64_t type)
 }
 
 #define FLAG_STR(x) { x, #x }
-static const char	*shf_to_str(uint64_t flags, char *buf, size_t size)
+const char	*shf_to_str(uint64_t flags, char *buf, size_t size)
 {
 	static const struct
 	{
@@ -177,7 +177,7 @@ const char	*stv_to_str(uint8_t other)
 	}
 }
 
-void	print_elf_hdr(t_nm *nm)
+void	print_elf_hdr(t_nm *nm unused)
 {
 	AUTO_LOG;
 
@@ -192,11 +192,12 @@ void	print_elf_hdr(t_nm *nm)
 	return ;
 }
 
-void	print_section_header_entry(t_shdr sh_hdr)
+void	print_section_header_entry(t_shdr sh_hdr unused)
 {
 	AUTO_LOG;
 
 	char	flags_buf[256] = {0};
+	(void)	(flags_buf);
 	LOG(H_BLUE("type") " %s", sht_to_str(sh_hdr.type));
 	LOG(H_BLUE("flags") " %s", shf_to_str(sh_hdr.flags, flags_buf, sizeof(flags_buf)));
 	LOG(H_BLUE("offset") " 0x%x", sh_hdr.offset);
@@ -208,7 +209,7 @@ void	print_section_header_entry(t_shdr sh_hdr)
 	return ;
 }
 
-void	print_symbol_table(t_sym *sym)
+void	print_symbol_table(t_sym *sym unused)
 {
 	AUTO_LOG;
 
