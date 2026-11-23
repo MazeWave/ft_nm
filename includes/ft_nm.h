@@ -6,7 +6,7 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 17:10:35 by ldalmass          #+#    #+#             */
-/*   Updated: 2026/11/20 15:50:26 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/11/20 19:06:44 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 #include <sys/mman.h>
 #include <elf.h>
 #include <endian.h>
+#include <locale.h>
 
 #include "log.h"
 #include "colors.h"
@@ -88,6 +89,7 @@ typedef struct s_sym
 	uint16_t	shndx;
 	uint8_t		info;
 	uint8_t		other;
+	char		letter;
 }	t_sym;
 
 typedef struct s_nm
@@ -102,6 +104,7 @@ typedef struct s_nm
 	struct s_ehdr	elf_hdr;
 	struct s_shdr	sh_hdr;
 	struct s_sym	symbol;
+	struct s_sym	*symbols;
 	struct s_shdr	sym_tab;
 	struct s_shdr	str_tab;
 	bool			has_symtab;
@@ -114,7 +117,6 @@ typedef struct s_nm
 	bool	display_debugger_symbols;
 	bool	display_external_symbols;
 	bool	display_undefined_symbols;
-	bool	revert_sorting;
 	bool	no_sorting;
 
 	// Files
@@ -125,7 +127,8 @@ typedef struct s_nm
 	char		*program_name;
 }	t_nm;
 
-extern int	g_exit_status;
+extern int32_t	g_exit_status;
+extern bool		g_is_reverse_sorting;
 
 // main.c
 void	free_nm(t_nm *nm);
@@ -178,4 +181,7 @@ const char	*stv_to_str(uint8_t other);
 
 // parse_symbols.c
 bool	parse_symbols(t_nm *nm);
+bool	skip_symbol(t_nm *nm, t_sym *s);
 char	get_letter(t_nm *nm, t_sym *s);
+char	*get_letter_prettier(t_nm *nm, t_sym *s);
+void	print_sorted_symbols(t_nm *nm, uint64_t count);

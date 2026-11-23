@@ -10,7 +10,7 @@ void	print_nm(t_nm *nm unused)
 	LOG(BLUE "display_debugger_symbols" RESET " %s", BOOL_STR(nm->display_debugger_symbols));
 	LOG(BLUE "display_external_symbols" RESET " %s", BOOL_STR(nm->display_external_symbols));
 	LOG(BLUE "display_undefined_symbols" RESET " %s", BOOL_STR(nm->display_undefined_symbols));
-	LOG(YELLOW "revert_sorting" RESET " %s", BOOL_STR(nm->revert_sorting));
+	LOG(YELLOW "revert_sorting" RESET " %s", BOOL_STR(g_is_reverse_sorting));
 	LOG(YELLOW "no_sorting" RESET " %s", BOOL_STR(nm->no_sorting));
 	return ;
 }

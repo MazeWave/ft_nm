@@ -6,7 +6,7 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/27 14:22:16 by ldalmass          #+#    #+#             */
-/*   Updated: 2026/11/13 13:26:39 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/11/20 18:13:59 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	opts_parser(int argc, char **argv, t_nm *nm)
 				break;
 			case 'r':
 				can_use_bonus_flag(nm, STDERR_FILENO);
-				nm->revert_sorting = true;
+				g_is_reverse_sorting = true;
 				break;
 			case 'p':
 				can_use_bonus_flag(nm, STDERR_FILENO);

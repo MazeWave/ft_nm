@@ -48,13 +48,13 @@ void	init_nm(t_nm *nm, char **argv)
 	nm->display_debugger_symbols = false;
 	nm->display_external_symbols = false;
 	nm->display_undefined_symbols = false;
-	nm->revert_sorting = false;
 	nm->no_sorting = false;
 	nm->has_symtab = false;
 	return ;
 }
 
-int	g_exit_status = 0;
+int32_t	g_exit_status = 0;
+bool	g_is_reverse_sorting = false;
 
 int	main(int argc, char **argv)
 {
@@ -64,6 +64,7 @@ int	main(int argc, char **argv)
 
 	init_nm(nm, argv);
 	opts_parser(argc, argv, nm);
+	setlocale(LC_ALL, "");
 
 	// loop over each files
 	t_file_name	*temp = nm->filenames;
@@ -86,8 +87,9 @@ int	main(int argc, char **argv)
 			nm->elf_hdr =		(t_ehdr){0};
 			nm->sym_tab =		(t_shdr){0};
 			nm->str_tab =		(t_shdr){0};
+			nm->symbols =		(t_sym*){0};
+			nm->symbol =		(t_sym) {0};
 			nm->sh_hdr =		(t_shdr){0};
-			nm->symbol =		(t_sym){0};
 			nm->has_symtab = 	false;
 			temp = temp->next;
 			counter++;

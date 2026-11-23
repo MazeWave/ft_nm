@@ -53,7 +53,7 @@ bool	fill_elf_header(t_nm *nm)
 
 bool	get_shdr_header_at(t_nm *nm, uint64_t id)
 {
-	AUTO_LOG;
+	// AUTO_LOG;
 
 	if (id >= nm->elf_hdr.shnum)	goto error;
 	uint64_t	offset = id * nm->elf_hdr.shentsize + nm->elf_hdr.shoff;
@@ -94,10 +94,10 @@ bool	get_shdr_header_at(t_nm *nm, uint64_t id)
 		};
 	}
 
-	LOG(PASS);
+	// LOG(PASS);
 	return false;
 	error:
-		LOG(FAIL);
+		// LOG(FAIL);
 		return true;
 }
 
@@ -107,9 +107,10 @@ const char	*get_sym_name(t_nm *nm, uint32_t nameoff)
 
     const char *name;
 
-    if (nameoff >= nm->str_tab.size) return (NULL);
+    if (nameoff >= nm->str_tab.size)	return (NULL);
     name = (const char *)nm->file + nm->str_tab.offset + nameoff;
-    if (!memchr(name, '\0', nm->str_tab.size - nameoff)) return (NULL);
+    if (!memchr(name, '\0', nm->str_tab.size - nameoff))	return (NULL);
+
     LOG(MAGENTA "Read symbol name: %s" RESET, name);
     return (name);
 }
@@ -136,6 +137,7 @@ bool	get_sym_entry_at(t_nm *nm, uint64_t id)
 			.shndx = rd16(nm, sym.st_shndx),
 			.info = sym.st_info,
 			.other = sym.st_other,
+			.letter = '\0',
 		};
 	}
 	else
@@ -152,6 +154,7 @@ bool	get_sym_entry_at(t_nm *nm, uint64_t id)
 			.shndx = rd16(nm, sym.st_shndx),
 			.info = sym.st_info,
 			.other = sym.st_other,
+			.letter = '\0',
 		};
 	}
 
