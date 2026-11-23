@@ -6,7 +6,7 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 17:10:35 by ldalmass          #+#    #+#             */
-/*   Updated: 2026/11/20 19:29:09 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/11/23 14:18:44 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,16 +79,23 @@ static int	cmp_sym(const void *p1, const void *p2)
 
 static const char	*letter_color(char c)
 {
-	if (c == '?')	return H_BLACK("?");	// unknown
-	if (c == 'U')	return H_RED("U");		// undefined symbol
-	if (c == 'w')	return H_RED("w");		// undefined
-	if (c == 'v')	return H_RED("v");		// undefined
-	if (c == 'i')	return H_BLUE("i");		// undefined
-	if (c == 'T')	return H("T");			// undefined
-	if (c == 't')	return H("t");			// undefined
-	if (c == 'U')	return H_MAGENTA("U");	// undefined
-	if (c == 'D')	return H_MAGENTA("D");	// initialized symbol
-	return GREEN;                      // or a color per letter, your choice
+	if (c == '?')	return H_BLACK("?");			// unknown symbol
+	if (c == 'U')	return H("U");					// undefined symbol
+	if (c == 'D')	return H_GREEN("D");			// initialized symbol
+	if (c == 'u')	return H_MAGENTA("u");			// unique symbol
+	if (c == 'w')	return H_BLUE("w");				// weak untagged symbol
+	if (c == 'W')	return H_BLUE("W");				// weak untagged symbol
+	if (c == 'v')	return H_RED("v");				// symbol is weak object
+	if (c == 'i')	return H_BLUE("i");				// DDL symbol (Windows)
+	if (c == 'T')	return H_YELLOW("T");			// symbol is in text code section
+	if (c == 't')	return H_YELLOW("t");			// symbol is in text code section
+	if (c == 'B')	return H_CYAN(BLACK"B"RESET);	// symbol is in .bss data
+	if (c == 'b')	return H_CYAN(BLACK"b"RESET);	// symbol is in .bss data
+	if (c == 'R')	return H_GREEN("R");			// symbol is in read-only data section
+	if (c == 'r')	return H_GREEN("r");			// symbol is in read-only data section
+	if (c == 'D')	return H_RED("D");				// symbol is initialized in data section
+	if (c == 'd')	return H_RED("d");				// symbol is initialized in data section
+	return CYAN;									// or a color per letter, your choice
 }
 
 void	print_sorted_symbols(t_nm *nm, uint64_t count)
