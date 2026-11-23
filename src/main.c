@@ -76,7 +76,7 @@ int	main(int argc, char **argv)
 		if (parse_elf(temp->name, nm))			goto error;
 		if (parse_section_header(nm))			goto error;
 		if (parse_section_header_entries(nm))	goto error;
-		if (!nm->has_symtab)						goto next;	// Checks if the file is stripped
+		if (!nm->has_symtab)					goto next;	// Checks if the file is stripped
 		if (parse_symbols(nm))					goto error;
 		goto next;
 
