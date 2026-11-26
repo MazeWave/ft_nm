@@ -130,7 +130,7 @@ bool	get_sym_entry_at(t_nm *nm, uint64_t id)
 		memcpy(&sym, (uint8_t *)nm->file + offset, sizeof(sym));
 		nm->symbol = (t_sym)
 		{
-			.namestr = get_sym_name(nm, sym.st_name),
+			.namestr = get_sym_name(nm, rd32(nm, sym.st_name)),
 			.value = rd64(nm, sym.st_value),
 			.nameoff = rd32(nm, sym.st_name),
 			.size = rd64(nm, sym.st_size),
@@ -147,7 +147,7 @@ bool	get_sym_entry_at(t_nm *nm, uint64_t id)
 		memcpy(&sym, (uint8_t *)nm->file + offset, sizeof(sym));
 		nm->symbol = (t_sym)
 		{
-			.namestr = get_sym_name(nm, sym.st_name),
+			.namestr = get_sym_name(nm, rd32(nm, sym.st_name)),
 			.value = rd32(nm, sym.st_value),
 			.nameoff = rd32(nm, sym.st_name),
 			.size = rd32(nm, sym.st_size),
