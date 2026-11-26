@@ -6,7 +6,7 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 17:10:35 by ldalmass          #+#    #+#             */
-/*   Updated: 2026/11/26 16:01:13 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/11/26 18:35:25 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,8 @@ static const char	*letter_color(char c)
 	if (c == 'r')	return H_GREEN("r");			// symbol is in read-only data section
 	if (c == 'D')	return H_RED("D");				// symbol is initialized in data section
 	if (c == 'd')	return H_RED("d");				// symbol is initialized in data section
-	return CYAN;									// or a color per letter, your choice
+	if (c == 'a')	return H_MAGENTA("a");				// symbol is initialized in data section
+	return (H_RED("FORGOT OMG"));
 }
 
 void	print_sorted_symbols(t_nm *nm, uint64_t count)
