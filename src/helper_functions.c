@@ -24,7 +24,7 @@ bool	fill_elf_header(t_nm *nm)
 			.shnum = rd16(nm, hdr.e_shnum),
 			.shstrndx = rd16(nm, hdr.e_shstrndx),
 			.machine = rd16(nm, hdr.e_machine),
-			.version = rd16(nm, hdr.e_version),
+			.version = rd32(nm, hdr.e_version),
 		};
 	}
 	else
@@ -35,12 +35,12 @@ bool	fill_elf_header(t_nm *nm)
 		nm->elf_hdr = (t_ehdr)
 		{
 			.type = rd16(nm, hdr.e_type),
-			.shoff = rd64(nm, hdr.e_shoff),
+			.shoff = rd32(nm, hdr.e_shoff),
 			.shentsize = rd16(nm, hdr.e_shentsize),
 			.shnum = rd16(nm, hdr.e_shnum),
 			.shstrndx = rd16(nm, hdr.e_shstrndx),
 			.machine = rd16(nm, hdr.e_machine),
-			.version = rd16(nm, hdr.e_version),
+			.version = rd32(nm, hdr.e_version),
 		};
 	}
 
@@ -69,7 +69,7 @@ bool	get_shdr_header_at(t_nm *nm, uint64_t id)
 			.nameoff = rd32(nm, hdr.sh_name),
 			.type = rd32(nm, hdr.sh_type),
 			.flags = rd64(nm, hdr.sh_flags),
-			.offset = rd32(nm, hdr.sh_offset),
+			.offset = rd64(nm, hdr.sh_offset),
 			.size = rd64(nm, hdr.sh_size),
 			.link = rd32(nm, hdr.sh_link),
 			.info = rd32(nm, hdr.sh_info),

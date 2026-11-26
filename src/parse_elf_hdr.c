@@ -24,18 +24,18 @@ bool	parse_bits(t_nm *nm)
 	// Set if we are using 64bits or 32bits
 	nm->is_64bits = (file[EI_CLASS] == ELFCLASS64);
 
-	// Check and set endianness
-	// if (file[EI_DATA] == ELFDATANONE || file[EI_DATA] > ELFDATA2MSB)	goto error;
-	if (file[EI_DATA] == ELFDATANONE)	goto error;
+	if (file[EI_DATA] == ELFDATANONE || file[EI_DATA] > ELFDATA2MSB)	goto error;
+	if (file[EI_VERSION] == EV_NONE || file[EI_VERSION] > EV_CURRENT)	goto error;
+
+	// Set if we are using little or big endianness
 	nm->is_big_endian = (file[EI_DATA] == ELFDATA2MSB);
-	if (file[EI_VERSION] == EV_NONE)	goto error;
 
 	LOG(PASS);
 	return false;
 
 	error:
 		LOG(FAIL);
-		dprintf(STDERR_FILENO, YELLOW "%s: Warning: %s: file format not recognized." RESET, nm->program_name, nm->current_opened_filename);
+		dprintf(STDERR_FILENO, YELLOW "%s: Warning: %s: file format not recognized\n" RESET, nm->program_name, nm->current_opened_filename);
 		return true;
 }
 
@@ -44,7 +44,9 @@ bool	parse_magic_number(t_nm *nm)
 	AUTO_LOG;
 
 	if (is_inbound(nm, 0, SELFMAG) && memcmp(nm->file, ELFMAG, SELFMAG) == 0) return (LOG(PASS), false);
-	else return (LOG(FAIL), true);
+
+	dprintf(STDERR_FILENO, YELLOW "%s: Warning: %s: file format not recognized\n" RESET, nm->program_name, nm->current_opened_filename);
+	return (LOG(FAIL), true);
 }
 
 bool	parse_elf(const char *path, t_nm *nm)

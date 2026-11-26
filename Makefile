@@ -6,7 +6,7 @@
 #    By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/04/28 17:11:28 by ldalmass          #+#    #+#              #
-#    Updated: 2026/11/26 14:08:18 by ldalmass         ###   ########.fr        #
+#    Updated: 2026/11/26 15:23:31 by ldalmass         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,8 +29,8 @@ CC		=	gcc
 
 UNAME_S	:=	$(shell uname -s)
 
-CFLAGS	=	-Wall -Wextra -Werror -std=c23 -D_POSIX_C_SOURCE=200809L
-# CFLAGS	=	-Wall -Wextra -Werror -DPRINT_LOGS -std=c23 -D_POSIX_C_SOURCE=200809L
+CFLAGS	=	-Wall -Wextra -Werror -std=c23 -D_POSIX_C_SOURCE=200809L -D_GNU_SOURCE
+# CFLAGS	=	-Wall -Wextra -Werror -DPRINT_LOGS -std=c23 -D_POSIX_C_SOURCE=200809L -D_GNU_SOURCE
 
 # Enable logs
 CFLAGS += -D_DEFAULT_SOURCE

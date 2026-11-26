@@ -6,7 +6,7 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 17:10:35 by ldalmass          #+#    #+#             */
-/*   Updated: 2026/11/23 14:18:44 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/11/26 16:01:13 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,15 +66,17 @@ char	get_letter(t_nm *nm, t_sym *s)
 
 static int	cmp_sym(const void *p1, const void *p2)
 {
-	const t_sym	*a = p1; // void * → t_sym *, no dereference needed
+	const t_sym	*a = p1;
 	const t_sym	*b = p2;
 	const char	*na = a->namestr ? a->namestr : "";
 	const char	*nb = b->namestr ? b->namestr : "";
 	
 	int	r = strcoll(na, nb);		// 1. by name
+	if (g_is_reverse_sorting)
+		r = -r;
 	if (r == 0)						// 2. same name → by address
 		r = (a->value > b->value) - (a->value < b->value);
-	return g_is_reverse_sorting ? -r : r;	// 3. -r flips everything
+	return r;
 }
 
 static const char	*letter_color(char c)
