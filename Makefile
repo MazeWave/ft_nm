@@ -6,7 +6,7 @@
 #    By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/04/28 17:11:28 by ldalmass          #+#    #+#              #
-#    Updated: 2026/08/27 1515:0505:2020 by ldalmass         ###   ########.fr        #
+#    Updated: 2026/11/26 14:08:18 by ldalmass         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,6 @@ SRC		=	src/main.c \
 			src/helper_functions.c \
 			src/printer.c \
 			src/parser_opt.c \
-			src/parse_files.c \
 			src/parse_elf_hdr.c \
 			src/parse_elf_sections.c \
 			src/parse_symbols.c \

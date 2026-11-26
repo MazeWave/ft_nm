@@ -6,7 +6,7 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/27 14:22:16 by ldalmass          #+#    #+#             */
-/*   Updated: 2026/11/20 18:13:59 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/11/26 14:05:53 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	opts_parser(int argc, char **argv, t_nm *nm)
 	int	opt = 0;
 
 	LOG(BLUE "optind: %d, argc: %d" RESET, optind, argc);
-	while ((opt = getopt(argc, argv, "-h?bvagurp")) != -1)
+	while ((opt = getopt(argc, argv, "h?bvagurp")) != -1)
 	{
 		switch (opt)
 		{
@@ -74,22 +74,20 @@ void	opts_parser(int argc, char **argv, t_nm *nm)
 				help(nm, STDOUT_FILENO);
 				free_nm(nm);
 				exit (EXIT_SUCCESS);
-			default:
-				nm->files_count++;
-				add_file_name(optarg, nm);
-				break;
 		}
 	}
 
+	nm->filenames = argv + optind;
+	nm->files_count = argc - optind;
 	print_nm(nm);
 
 	// No file specified, defaulting to read a.out
 	if (nm->files_count == 0)
 	{
-		add_file_name("a.out", nm);
+		static char	*default_file[] = {"a.out", NULL};
+		nm->filenames = default_file;
 		nm->files_count = 1;
 	}
-	list_file_name(nm);
 
 	return ;
 }

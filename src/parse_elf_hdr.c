@@ -25,8 +25,10 @@ bool	parse_bits(t_nm *nm)
 	nm->is_64bits = (file[EI_CLASS] == ELFCLASS64);
 
 	// Check and set endianness
-	if (file[EI_DATA] == ELFDATANONE || file[EI_DATA] > ELFDATA2MSB)	goto error;
+	// if (file[EI_DATA] == ELFDATANONE || file[EI_DATA] > ELFDATA2MSB)	goto error;
+	if (file[EI_DATA] == ELFDATANONE)	goto error;
 	nm->is_big_endian = (file[EI_DATA] == ELFDATA2MSB);
+	if (file[EI_VERSION] == EV_NONE)	goto error;
 
 	LOG(PASS);
 	return false;
@@ -52,9 +54,7 @@ bool	parse_elf(const char *path, t_nm *nm)
 	if (open_file(path, nm))	return (true);
 	if (parse_magic_number(nm))	return (true);
 	if (parse_bits(nm))			return (true);
-
-	
-	if (fill_elf_header(nm))	return(true);
+	if (fill_elf_header(nm))	return (true);
 	print_nm(nm);
 	print_elf_hdr(nm);
 	return (false);

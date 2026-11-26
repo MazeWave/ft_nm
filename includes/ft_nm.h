@@ -6,7 +6,7 @@
 /*   By: ldalmass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 17:10:35 by ldalmass          #+#    #+#             */
-/*   Updated: 2026/11/23 14:01:50 by ldalmass         ###   ########.fr       */
+/*   Updated: 2026/11/2626 1313:2727:2424 by ldalmass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,8 @@ typedef struct s_sym
 typedef struct s_nm
 {
 	// Structs
-	struct s_file_name	*filenames;
+	// struct s_file_name	*filenames;
+	char		**filenames;
 
 	// Currently opened file maped
 	void			*file;
@@ -141,7 +142,7 @@ void	help(t_nm *nm, int fd);
 
 // parse_files.c
 void	init_file_name(t_nm *nm);
-void	add_file_name(char *name, t_nm *nm);
+void	add_file_name (char *name, t_nm *nm);
 void	list_file_name(t_nm *nm);
 void	free_file_name(t_nm *nm);
 
